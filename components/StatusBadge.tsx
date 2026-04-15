@@ -25,6 +25,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   };
 
   const getLabel = (s: ProposalStatus) => {
+    if (!s) return 'Unknown';
     switch (s) {
       case ProposalStatus.PENDING_ADVISOR: return 'Pending Advisor';
       case ProposalStatus.PENDING_MPP: return 'Pending MPP';

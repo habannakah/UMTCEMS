@@ -9,7 +9,7 @@ const Landing: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-umt-navy rounded flex items-center justify-center text-white font-bold">U</div>
-            <span className="text-xl font-bold text-umt-navy">UCEMS</span>
+            <span className="text-xl font-bold text-umt-navy">UMT Club Event Management System</span>
           </div>
           <div className="flex items-center space-x-4">
             <Link to="/login" className="text-slate-600 hover:text-umt-navy font-medium">Log In</Link>
@@ -22,7 +22,7 @@ const Landing: React.FC = () => {
         {/* Hero Section */}
         <div className="bg-umt-navy text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">University Club Event Management System</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">UMT Club Event Management System</h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto mb-10">
               Streamline your club's event proposals, approvals, and reporting in one centralized platform at UMT.
             </p>

@@ -24,6 +24,25 @@ const ProposalDetails: React.FC = () => {
 
   if (!proposal) return <div className="p-8">Proposal not found</div>;
 
+  if (user?.role === UserRole.MPP_EXCO) {
+    if (proposal.status === ProposalStatus.PENDING_ADVISOR) {
+      return (
+        <div className="p-8 text-center bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] max-w-md mx-auto mt-12">
+          <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
+          <p className="font-bold">This proposal is pending Club Advisor approval and is not yet available for MPP review.</p>
+        </div>
+      );
+    }
+    if (proposal.status === ProposalStatus.NEEDS_IMPROVEMENT && !proposal.history.some(h => h.status === ProposalStatus.PENDING_MPP)) {
+      return (
+        <div className="p-8 text-center bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] max-w-md mx-auto mt-12">
+          <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
+          <p className="font-bold">This proposal was returned for revisions by the Club Advisor and has not yet reached MPP review.</p>
+        </div>
+      );
+    }
+  }
+
   const canReview = user && (
       (user.role === UserRole.ADVISOR && proposal.status === ProposalStatus.PENDING_ADVISOR) ||
       (user.role === UserRole.MPP_EXCO && proposal.status === ProposalStatus.PENDING_MPP)
@@ -206,6 +225,30 @@ const ProposalDetails: React.FC = () => {
                         <label className="text-xs font-semibold text-slate-400 uppercase">Description</label>
                         <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.description}</p>
                     </div>
+                    {proposal.budget && (
+                        <div className="col-span-2">
+                            <label className="text-xs font-semibold text-slate-400 uppercase">Budget / Financial Requirements</label>
+                            <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.budget}</p>
+                        </div>
+                    )}
+                    {proposal.committee && (
+                        <div className="col-span-2">
+                            <label className="text-xs font-semibold text-slate-400 uppercase">Committee Members / Organizers</label>
+                            <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.committee}</p>
+                        </div>
+                    )}
+                    {proposal.logistics && (
+                        <div className="col-span-2">
+                            <label className="text-xs font-semibold text-slate-400 uppercase">Equipment / Logistics Needed</label>
+                            <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.logistics}</p>
+                        </div>
+                    )}
+                    {proposal.outcomes && (
+                        <div className="col-span-2">
+                            <label className="text-xs font-semibold text-slate-400 uppercase">Expected Outcomes</label>
+                            <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.outcomes}</p>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -243,7 +286,7 @@ const ProposalDetails: React.FC = () => {
                                     </div>
                                 </div>
                                 <button className="text-green-700 hover:text-green-900 font-medium text-sm flex items-center">
-                                    <Download size={16} className="mr-1"/> Download
+                                    <Download size={16} className="mr-1"/> Save report
                                 </button>
                             </div>
                             {proposal.postEventReport.photos.length > 0 && (
@@ -354,21 +397,46 @@ const ProposalDetails: React.FC = () => {
              <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
                 <h3 className="text-lg font-bold text-slate-800 mb-4">Status Timeline</h3>
                 <div className="relative border-l-2 border-slate-200 ml-3 space-y-6 pl-6 pb-2">
-                    {proposal.history.map((h, idx) => (
-                        <div key={idx} className="relative">
-                            <div className={`absolute -left-[31px] w-4 h-4 rounded-full border-2 ${idx === proposal.history.length - 1 ? 'bg-umt-light border-umt-light' : 'bg-white border-slate-300'}`}></div>
-                            <p className="text-sm font-semibold text-slate-800">{h.status.replace('_', ' ')}</p>
-                            <p className="text-xs text-slate-500">by {h.actor}</p>
-                            <p className="text-xs text-slate-400 mt-1">{h.timestamp}</p>
-                        </div>
-                    ))}
-                    {/* Future Step Visual */}
-                    {proposal.status !== ProposalStatus.APPROVED && proposal.status !== ProposalStatus.REJECTED && proposal.status !== ProposalStatus.COMPLETED && (
-                        <div className="relative opacity-50">
-                            <div className="absolute -left-[31px] w-4 h-4 rounded-full border-2 bg-white border-slate-300"></div>
-                            <p className="text-sm font-semibold text-slate-600">Next Stage</p>
-                        </div>
-                    )}
+                    {proposal.history.map((h, idx) => {
+                        let label = h.status.replace('_', ' ');
+                        if (h.status === ProposalStatus.PENDING_ADVISOR && idx === 0) label = "Submitted for Advisor Review";
+                        else if (h.status === ProposalStatus.PENDING_ADVISOR) label = "Resubmitted for Advisor Review";
+                        else if (h.status === ProposalStatus.PENDING_MPP) label = "Approved by Advisor (Pending MPP)";
+                        else if (h.status === ProposalStatus.NEEDS_IMPROVEMENT) label = "Revisions Requested";
+                        else if (h.status === ProposalStatus.APPROVED) label = "Approved by MPP";
+                        else if (h.status === ProposalStatus.REJECTED) label = "Proposal Rejected";
+                        else if (h.status === ProposalStatus.COMPLETED) label = "Post-Event Report Submitted";
+
+                        return (
+                            <div key={idx} className="relative">
+                                <div className={`absolute -left-[31px] w-4 h-4 rounded-full border-2 ${idx === proposal.history.length - 1 ? 'bg-umt-light border-umt-light' : 'bg-white border-slate-300'}`}></div>
+                                <p className="text-sm font-semibold text-slate-800">{label}</p>
+                                <p className="text-xs text-slate-500">by {h.actor}</p>
+                                <p className="text-xs text-slate-400 mt-1">{h.timestamp}</p>
+                            </div>
+                        );
+                    })}
+                    
+                    {/* Future Steps Visual */}
+                    {(() => {
+                        let futureSteps: string[] = [];
+                        if (proposal.status === ProposalStatus.PENDING_ADVISOR) {
+                            futureSteps = ["Advisor Approval", "MPP Approval", "Post-Event Report"];
+                        } else if (proposal.status === ProposalStatus.PENDING_MPP) {
+                            futureSteps = ["MPP Approval", "Post-Event Report"];
+                        } else if (proposal.status === ProposalStatus.NEEDS_IMPROVEMENT) {
+                            futureSteps = ["Resubmission", "Pending Approvals", "Post-Event Report"];
+                        } else if (proposal.status === ProposalStatus.APPROVED) {
+                            futureSteps = ["Post-Event Report"];
+                        }
+
+                        return futureSteps.map((step, idx) => (
+                            <div key={`future-${idx}`} className="relative opacity-40">
+                                <div className="absolute -left-[31px] w-4 h-4 rounded-full border-2 bg-white border-slate-300"></div>
+                                <p className="text-sm font-semibold text-slate-600">{step}</p>
+                            </div>
+                        ));
+                    })()}
                 </div>
              </div>
              

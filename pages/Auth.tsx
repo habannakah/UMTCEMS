@@ -16,6 +16,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
   const [fullName, setFullName] = useState('');
   const [matricId, setMatricId] = useState('');
   const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.CLUB_REP);
+  const [selectedClub, setSelectedClub] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -27,6 +28,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
     setPassword('');
     setFullName('');
     setMatricId('');
+    setSelectedClub('');
   }, [mode]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -42,6 +44,10 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
       }
       if (password.length < 6) {
         setError('Password must be at least 6 characters.');
+        return;
+      }
+      if ((selectedRole === UserRole.CLUB_REP || selectedRole === UserRole.ADVISOR) && !selectedClub) {
+        setError('Please select a club.');
         return;
       }
 
@@ -76,7 +82,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-umt-navy text-white font-bold text-xl mb-4">U</div>
           <h2 className="text-2xl font-bold text-slate-800">{mode === 'login' ? 'Welcome Back' : 'Create Account'}</h2>
-          <p className="text-slate-500 mt-1">{mode === 'login' ? 'Sign in to access UCEMS' : 'Join UCEMS to manage events'}</p>
+          <p className="text-slate-500 mt-1">{mode === 'login' ? 'Sign in to access the system' : 'Join the system to manage events'}</p>
         </div>
 
         {error && (
@@ -152,6 +158,24 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
               <option value={UserRole.HEPA_STAFF}>HEPA Staff</option>
             </select>
           </div>
+
+          {mode === 'register' && (selectedRole === UserRole.CLUB_REP || selectedRole === UserRole.ADVISOR) && (
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Select Club</label>
+              <select
+                required
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light focus:border-umt-light outline-none transition bg-white"
+                value={selectedClub}
+                onChange={(e) => setSelectedClub(e.target.value)}
+              >
+                <option value="" disabled>Select a club...</option>
+                <option value="Computer Science Society">Computer Science Society</option>
+                <option value="Robotics Club">Robotics Club</option>
+                <option value="Debate Club">Debate Club</option>
+                <option value="Photography Society">Photography Society</option>
+              </select>
+            </div>
+          )}
 
           <button
             type="submit"

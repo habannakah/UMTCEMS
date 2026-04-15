@@ -16,6 +16,10 @@ const SubmitProposal: React.FC = () => {
     objective: '',
     participants: '',
     description: '',
+    budget: '',
+    committee: '',
+    logistics: '',
+    outcomes: '',
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,9 +32,8 @@ const SubmitProposal: React.FC = () => {
     e.preventDefault();
     if (!user) return;
 
-    // Simulate Documents
+    // Simulate Documents (Proposal PDF is removed as per requirements)
     const documents = [
-      { name: 'Paperwork_Draft.pdf', url: '#' },
       { name: 'Risk_Assessment.pdf', url: '#' },
     ];
 
@@ -177,17 +180,69 @@ const SubmitProposal: React.FC = () => {
               />
             </div>
 
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Budget / Financial Requirements</label>
+              <textarea
+                name="budget"
+                required
+                rows={3}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                placeholder="Provide a breakdown of the estimated budget..."
+                value={formData.budget}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Committee Members / Organizers</label>
+              <textarea
+                name="committee"
+                required
+                rows={3}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                placeholder="List the key committee members and their roles..."
+                value={formData.committee}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Equipment / Logistics Needed</label>
+              <textarea
+                name="logistics"
+                required
+                rows={3}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                placeholder="List any equipment, transportation, or logistics required..."
+                value={formData.logistics}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Expected Outcomes</label>
+              <textarea
+                name="outcomes"
+                required
+                rows={3}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                placeholder="What are the expected benefits or outcomes of this event?"
+                value={formData.outcomes}
+                onChange={handleChange}
+              />
+            </div>
+
             <div className="col-span-2 border-t border-slate-100 pt-6">
               <h3 className="font-medium text-slate-800 mb-4">Required Documents</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition cursor-pointer">
                   <Upload className="text-slate-400 mb-2" size={24} />
-                  <span className="text-sm font-medium text-slate-600">Upload Proposal (PDF)</span>
+                  <span className="text-sm font-medium text-slate-600">Upload Risk Assessment</span>
                   <input type="file" className="hidden" />
                 </div>
                 <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition cursor-pointer">
                   <Upload className="text-slate-400 mb-2" size={24} />
-                  <span className="text-sm font-medium text-slate-600">Upload Risk Assessment</span>
+                  <span className="text-sm font-medium text-slate-600">Upload Additional Documents (Optional)</span>
                   <input type="file" className="hidden" />
                 </div>
               </div>

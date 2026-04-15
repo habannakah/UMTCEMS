@@ -2,13 +2,90 @@ import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
 import { ProposalStatus, UserRole } from '../types';
-import { UploadCloud, CheckCircle, Image as ImageIcon, LayoutDashboard, FileText } from 'lucide-react';
+import { UploadCloud, CheckCircle, Image as ImageIcon, LayoutDashboard, FileText, Download, Calendar, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
+const ReportViewer = () => {
+    const { user } = useAuth();
+    const { proposals } = useData();
+    const navigate = useNavigate();
+
+    // Filter completed proposals based on role
+    let completedProposals = proposals.filter(p => p.status === ProposalStatus.COMPLETED && p.postEventReport);
+
+    if (user?.role === UserRole.ADVISOR) {
+        completedProposals = completedProposals.filter(p => p.clubName === user.clubName);
+    }
+
+    return (
+        <div className="max-w-6xl mx-auto space-y-6">
+            <div>
+                <h1 className="text-3xl font-bold mb-2">Post-Event Reports</h1>
+                <p className="font-bold text-lg text-slate-600">
+                    {user?.role === UserRole.ADVISOR 
+                        ? `Review completed event reports for ${user.clubName}.` 
+                        : 'System-wide archive of completed event reports.'}
+                </p>
+            </div>
+
+            {completedProposals.length === 0 ? (
+                <div className="bg-white p-8 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center">
+                    <p className="font-bold text-lg">No post-event reports available.</p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {completedProposals.map(p => (
+                        <div key={p.id} className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex flex-col">
+                            <div className="p-5 border-b-2 border-black bg-slate-50">
+                                <h3 className="font-bold text-xl mb-1 line-clamp-1">{p.title}</h3>
+                                <p className="text-sm font-bold text-slate-600">{p.clubName}</p>
+                            </div>
+                            <div className="p-5 flex-1 space-y-4">
+                                <div className="flex items-center text-sm font-bold">
+                                    <Calendar size={16} className="mr-2" /> Event Date: {p.eventDate}
+                                </div>
+                                <div className="flex items-center text-sm font-bold">
+                                    <Users size={16} className="mr-2" /> Participants: {p.participants}
+                                </div>
+                                <div className="flex items-center text-sm font-bold">
+                                    <CheckCircle size={16} className="mr-2" /> Submitted: {p.postEventReport?.submittedDate}
+                                </div>
+                            </div>
+                            <div className="p-5 border-t-2 border-black bg-slate-50 flex flex-col gap-3">
+                                <button 
+                                    onClick={() => alert(`Downloading ${p.postEventReport?.reportFile}...`)}
+                                    className="w-full flex items-center justify-center gap-2 bg-black text-white px-4 py-2 font-bold hover:bg-slate-800 transition-colors border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)]"
+                                >
+                                    <Download size={18} /> Save report
+                                </button>
+                                <button 
+                                    onClick={() => navigate(`/proposals/${p.id}`)}
+                                    className="w-full flex items-center justify-center gap-2 bg-white text-black px-4 py-2 font-bold hover:bg-slate-100 transition-colors border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)]"
+                                >
+                                    <FileText size={18} /> View Original Proposal
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
 
 const PostEventReport: React.FC = () => {
     const { user } = useAuth();
     const { proposals, submitReport } = useData();
     const navigate = useNavigate();
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [selectedProposalId, setSelectedProposalId] = useState('');
+    const [file, setFile] = useState<File | null>(null);
+    const [success, setSuccess] = useState(false);
+
+    if (user?.role !== UserRole.CLUB_REP) {
+        return <ReportViewer />;
+    }
 
     // Filter proposals that are APPROVED but not yet COMPLETED
     const eligibleProposals = proposals.filter(p => 
@@ -16,13 +93,11 @@ const PostEventReport: React.FC = () => {
         p.status === ProposalStatus.APPROVED
     );
 
-    const [selectedProposalId, setSelectedProposalId] = useState('');
-    const [file, setFile] = useState<File | null>(null);
-    const [success, setSuccess] = useState(false);
-
-    if (user?.role !== UserRole.CLUB_REP) {
-        return <div className="p-8 text-center text-slate-500">Only Club Representatives can submit reports.</div>;
-    }
+    const completedProposals = proposals.filter(p => 
+        p.clubName === user?.clubName && 
+        p.status === ProposalStatus.COMPLETED && 
+        p.postEventReport
+    );
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -53,10 +128,15 @@ const PostEventReport: React.FC = () => {
                     
                     <div className="space-y-3">
                         <button 
-                            onClick={() => navigate(`/proposals/${selectedProposalId}`)}
+                            onClick={() => {
+                                setSuccess(false);
+                                setIsSubmitting(false);
+                                setSelectedProposalId('');
+                                setFile(null);
+                            }}
                             className="w-full py-3.5 bg-umt-navy text-white rounded-xl font-bold hover:bg-blue-900 transition flex items-center justify-center shadow-md hover:shadow-lg"
                         >
-                            <FileText size={20} className="mr-2" /> View Event Details
+                            <FileText size={20} className="mr-2" /> View My Reports
                         </button>
                         <button 
                             onClick={() => navigate('/dashboard')}
@@ -70,9 +150,80 @@ const PostEventReport: React.FC = () => {
         );
     }
 
+    if (!isSubmitting) {
+        return (
+            <div className="max-w-6xl mx-auto space-y-6">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold mb-2">My Post-Event Reports</h1>
+                        <p className="font-bold text-lg text-slate-600">
+                            Manage and view your club's submitted event reports.
+                        </p>
+                    </div>
+                    <button 
+                        onClick={() => setIsSubmitting(true)}
+                        className="bg-black text-white px-6 py-3 font-bold hover:bg-slate-800 transition-colors border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)]"
+                    >
+                        Submit New Report
+                    </button>
+                </div>
+
+                {completedProposals.length === 0 ? (
+                    <div className="bg-white p-8 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center">
+                        <p className="font-bold text-lg">You haven't submitted any post-event reports yet.</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {completedProposals.map(p => (
+                            <div key={p.id} className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex flex-col">
+                                <div className="p-5 border-b-2 border-black bg-slate-50">
+                                    <h3 className="font-bold text-xl mb-1 line-clamp-1">{p.title}</h3>
+                                    <p className="text-sm font-bold text-slate-600">{p.clubName}</p>
+                                </div>
+                                <div className="p-5 flex-1 space-y-4">
+                                    <div className="flex items-center text-sm font-bold">
+                                        <Calendar size={16} className="mr-2" /> Event Date: {p.eventDate}
+                                    </div>
+                                    <div className="flex items-center text-sm font-bold">
+                                        <Users size={16} className="mr-2" /> Participants: {p.participants}
+                                    </div>
+                                    <div className="flex items-center text-sm font-bold">
+                                        <CheckCircle size={16} className="mr-2" /> Submitted: {p.postEventReport?.submittedDate}
+                                    </div>
+                                </div>
+                                <div className="p-5 border-t-2 border-black bg-slate-50 flex flex-col gap-3">
+                                    <button 
+                                        onClick={() => alert(`Downloading ${p.postEventReport?.reportFile}...`)}
+                                        className="w-full flex items-center justify-center gap-2 bg-black text-white px-4 py-2 font-bold hover:bg-slate-800 transition-colors border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)]"
+                                    >
+                                        <Download size={18} /> Save report
+                                    </button>
+                                    <button 
+                                        onClick={() => navigate(`/proposals/${p.id}`)}
+                                        className="w-full flex items-center justify-center gap-2 bg-white text-black px-4 py-2 font-bold hover:bg-slate-100 transition-colors border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)]"
+                                    >
+                                        <FileText size={18} /> View Original Proposal
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        );
+    }
+
     return (
         <div className="max-w-2xl mx-auto">
-            <h1 className="text-2xl font-bold text-slate-800 mb-6">Submit Post-Event Report</h1>
+            <div className="flex items-center justify-between mb-6">
+                <h1 className="text-2xl font-bold text-slate-800">Submit Post-Event Report</h1>
+                <button 
+                    onClick={() => setIsSubmitting(false)}
+                    className="text-sm font-bold underline hover:text-slate-600"
+                >
+                    Cancel
+                </button>
+            </div>
             
             {eligibleProposals.length === 0 ? (
                 <div className="bg-white p-8 rounded-xl shadow-sm text-center border border-slate-100">

@@ -21,7 +21,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       name: email.split('@')[0].toUpperCase(),
       email,
       role,
-      clubName: role === UserRole.CLUB_REP ? 'Computer Science Club' : undefined,
+      clubName: (role === UserRole.CLUB_REP || role === UserRole.ADVISOR) ? 'Computer Science Club' : undefined,
     };
     setUser(mockUser);
   };

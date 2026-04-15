@@ -43,6 +43,10 @@ export interface Proposal {
   objective: string;
   participants: string;
   description: string;
+  budget?: string;
+  committee?: string;
+  logistics?: string;
+  outcomes?: string;
   status: ProposalStatus;
   documents: { name: string; url: string }[];
   comments: Comment[];

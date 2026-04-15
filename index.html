@@ -4,27 +4,24 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UCEMS - UMT</title>
+    <title>UMT Club Event Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              umt: { navy: '#ffffff', light: '#ffffff', accent: '#ffffff' },
-              slate: { 50: '#ffffff', 100: '#ffffff', 200: '#ffffff', 300: '#ffffff', 400: '#333333', 500: '#333333', 600: '#333333', 700: '#333333', 800: '#333333', 900: '#333333' },
-              blue: { 50: '#ffffff', 100: '#ffffff', 200: '#ffffff', 500: '#ffffff', 600: '#ffffff', 700: '#ffffff', 800: '#333333', 900: '#333333' },
-              green: { 50: '#ffffff', 100: '#ffffff', 200: '#ffffff', 500: '#ffffff', 600: '#ffffff', 700: '#ffffff', 800: '#333333', 900: '#333333' },
-              amber: { 50: '#ffffff', 100: '#ffffff', 200: '#ffffff', 500: '#ffffff', 600: '#ffffff', 700: '#ffffff', 800: '#333333', 900: '#333333' },
-              red: { 50: '#ffffff', 100: '#ffffff', 200: '#ffffff', 500: '#ffffff', 600: '#ffffff', 700: '#ffffff', 800: '#333333', 900: '#333333' },
-              orange: { 50: '#ffffff', 100: '#ffffff', 200: '#ffffff', 500: '#ffffff', 600: '#ffffff', 700: '#ffffff', 800: '#333333', 900: '#333333' },
-              indigo: { 50: '#ffffff', 100: '#ffffff', 200: '#ffffff', 500: '#ffffff', 600: '#ffffff', 700: '#ffffff', 800: '#333333', 900: '#333333' }
+              umt: {
+                navy: '#002147',
+                light: '#0056b3',
+                accent: '#f4a261'
+              }
             }
           }
         }
       }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
     <style>
       body {
         font-family: 'Architects Daughter', cursive !important;
@@ -87,17 +84,24 @@
         filter: grayscale(100%) contrast(120%);
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0"
-  }
-}
-</script>
+    <script>
+      // Defensive fix for "TypeError: Cannot set property fetch of #<Window> which has only a getter"
+      (function() {
+        try {
+          var descriptor = Object.getOwnPropertyDescriptor(window, 'fetch');
+          if (descriptor && !descriptor.writable && !descriptor.set && descriptor.configurable) {
+            Object.defineProperty(window, 'fetch', {
+              value: window.fetch,
+              writable: true,
+              configurable: true,
+              enumerable: true
+            });
+          }
+        } catch (e) {
+          // Silently fail if we can't fix it, but at least we tried
+        }
+      })();
+    </script>
 <link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-slate-50 text-slate-900 antialiased">
