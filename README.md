@@ -1,4 +1,4 @@
-# UMTCEMS - University Malay Technology Campus Event Management System
+# UMTCEMS - University Malaysia Terengganu Club Event Management System
 
 A web-based event management system for campus events, built with React, TypeScript, and Vite.
 
