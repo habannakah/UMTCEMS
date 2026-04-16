@@ -10,7 +10,7 @@ A full-stack campus event management system for UMT clubs to submit, approve, an
 |-------|------------|
 | **Frontend** | React 19 + TypeScript + Vite |
 | **Backend** | Spring Boot 3.2 (Java 17) |
-| **Database** | MySQL via XAMPP or Railway cloud DB |
+| **Database** | MySQL via Railway cloud DB |
 | **ORM** | Spring Data JPA |
 
 ### Frontend Dependencies (already installed)
@@ -40,12 +40,10 @@ A full-stack campus event management system for UMT clubs to submit, approve, an
 - After installing, verify: open terminal and run `java --version`
 - Should show "17.x.x" or higher
 
-### 3. MySQL / XAMPP (for database)
-- Download XAMPP: https://www.apachefriends.org/
-- During install, make sure **MySQL** is checked (Apache is optional)
-- After install, open **XAMPP Control Panel**
-- Click **Start** next to MySQL — the row should turn green
-- Open your browser and go to http://localhost/phpmyadmin
+### 3. MySQL (via Railway — no local install needed)
+- No need to install MySQL locally — Railway hosts the database
+- One person creates the Railway MySQL project and shares credentials with the team
+- See `backend/RAILWAY_SETUP.md` for step-by-step instructions
 
 ### 4. Git (for version control)
 - Download: https://git-scm.com/download/win
@@ -76,31 +74,31 @@ CREATE DATABASE umtcems;
 
 If you see a message like "Database umtcems already exists" — that's fine, it means it was already created. JPA will automatically create the database tables when you run the backend.
 
-### Step 3: Start MySQL
+### Step 3: Railway Handles the Database
+- No local MySQL needed — Railway hosts the database for the whole team
+- Follow the setup in `backend/RAILWAY_SETUP.md`
 
-Open **XAMPP Control Panel** → Start **Apache** and **MySQL**
+### Step 4: Configure Backend
 
-### Step 4: Configure Database Connection
+> **For team development, use Railway cloud DB** — all 3 teammates share the same database. See `backend/RAILWAY_SETUP.md` for full guide.
 
-**Two options — pick one for your team:**
+**Short version:**
 
-#### Option A: Local MySQL (XAMPP) — Default for solo dev
-1. Copy `backend/src/main/resources/application.properties.template` to `application.properties`
-2. Edit it:
-```
-spring.datasource.url=jdbc:mysql://localhost:3306/umtcems
+1. One person creates a Railway MySQL project → shares the `MYSQL_URL` with the team
+2. Everyone copies `backend/src/main/resources/application.properties.template` → `application.properties`
+3. Fill in the Railway connection string from step 1
+
+```properties
+# Example Railway connection (from Railway dashboard MYSQL_URL)
+spring.datasource.url=jdbc:mysql://mysql.railway.internal:3306/railway
 spring.datasource.username=root
-spring.datasource.password=          ← leave blank if XAMPP MySQL has no password
+spring.datasource.password=abc123def456
 ```
 
-#### Option B: Railway Cloud DB — Shared across all 3 teammates
-> One person creates the Railway project and shares the connection string.
+4. Start the backend — JPA auto-creates all tables (`ddl-auto=update`)
+5. One person runs `backend/src/main/resources/seed-data.sql` once in the Railway SQL editor
 
-1. Copy `backend/src/main/resources/application.properties.template` to `application.properties`
-2. Follow the full guide in **`backend/RAILWAY_SETUP.md`**
-3. The short version: replace the URL/username/password with the values from Railway dashboard
-
-> ⚠️ `application.properties` is gitignored — it will never be committed with your credentials.
+> ⚠️ `application.properties` is gitignored — credentials will never be committed.
 
 ### Step 5: Run Backend
 
@@ -264,13 +262,14 @@ git push origin feature/yourname-backend
 |-------|-----|
 | `npm is not recognized` | Restart your terminal, or reinstall Node.js |
 | Maven/Gradle download seems stuck on first run | Wait 2–5 minutes. First run downloads ~100MB of dependencies. DO NOT close the window. |
-| `Communications link failure` | Open XAMPP Control Panel → Start **MySQL** |
-| `Access denied for user 'root'` | Edit `application.properties` — add your MySQL password after `=` on the password line |
-| `Unknown database 'umtcems'` | Go to http://localhost/phpmyadmin → SQL tab → run `CREATE DATABASE umtcems;` |
+| `Communications link failure` | Check your Railway MySQL is running in the Railway dashboard. If you restarted it, the host may have changed — update `application.properties` |
+| `Access denied for user 'root'` | Check your `spring.datasource.password=` in `application.properties` matches the Railway `MYSQL_URL` password |
+| `Unknown database 'umtcems'` | In Railway dashboard, create a database named `umtcems`, OR update JPA entities to use the default `railway` database name |
 | `CORS error` in browser | Make sure backend is running on port 8080 |
 | `Port 5173 is already in use` | Vite will automatically use 5174 instead — check the terminal output |
 | Java errors in VS Code | Install **"Extension Pack for Java"** extension in VS Code |
-| `Table 'proposals' doesn't exist` | Start the app — JPA creates tables automatically on first run |
+| `Table 'proposals' doesn't exist` | Start the app — JPA creates tables automatically on first run (`ddl-auto=update`) |
+| Railway connection refused | Check Railway MySQL is running (green status in dashboard). Free tier VMs spin down after 1 hour of inactivity — click Start to wake it up |
 
 ---
 
