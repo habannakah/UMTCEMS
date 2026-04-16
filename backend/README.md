@@ -1,153 +1,298 @@
-# UMTCEMS Backend - Spring Boot
+# UMTCEMS Backend - Setup Guide
 
-Event Management System Backend API using Spring Boot + JPA + MySQL
-
----
-
-## Prerequisites
-
-1. **Java 17+** - Download from https://adoptium.net/
-2. **MySQL** - Your XAMPP MySQL (default: localhost:3306)
-3. **Maven** - Comes with Spring Boot (or use `./mvnw` wrapper)
+**Frontend is DONE. Backend is what we build now.**
 
 ---
 
-## Quick Setup
+## WHO DOES WHAT
 
-### Step 1: Create MySQL Database
+| Person | Controller | Files They Code | Endpoints They Build |
+|--------|-----------|----------------|---------------------|
+| **HABAN** | `UserController.java` | `controller/UserController.java` + `service/UserService.java` | Register, Login, Change Password, Update Email |
+| **ALYSSA** | `ProposalController.java` | `controller/ProposalController.java` + `service/ProposalService.java` | Submit Proposal, Approve/Reject, Comments |
+| **AIDIL** | `ReportController.java` | `controller/ReportController.java` + `service/ReportService.java` | Submit Report, Analytics, Venue Clash Check |
 
-Open phpMyAdmin (http://localhost/phpmyadmin) or MySQL CLI and run:
+**Each person is RESPONSIBLE for their own controller. You code YOUR endpoints. You test YOUR endpoints.**
 
+---
+
+## STEP 1: SETUP (Do once)
+
+### 1.1: Pull Latest Code
+```bash
+cd UMTCEMS
+git pull origin main
+```
+
+### 1.2: Create MySQL Database
+Open **phpMyAdmin** (http://localhost/phpmyadmin) and run:
 ```sql
 CREATE DATABASE umtcems;
 ```
 
-That's it! JPA will create the tables automatically.
+That's it! JPA will create the tables automatically when you run the app.
 
-### Step 2: Configure Database Connection
-
-Edit `src/main/resources/application.properties`:
-
+### 1.3: Configure Database
+Edit `backend/src/main/resources/application.properties`:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/umtcems
 spring.datasource.username=root
 spring.datasource.password=
 ```
 
-If your MySQL has a password, add it. If using XAMPP default, leave it empty.
+If your MySQL has a password, add it. XAMPP default = no password.
 
-### Step 3: Run the Backend
+---
+
+## STEP 2: RUN THE BACKEND
 
 ```bash
-cd backend
+cd UMTCEMS/backend
 ./mvnw spring-boot:run
 ```
 
-Or in VS Code: Right-click `UMTCEMSApplication.java` → Run As → Java Application
+Wait until you see:
+```
+Started UMTCEMSApplication in X.XXX seconds
+```
 
-Backend will start on **http://localhost:8080**
+Backend runs on **http://localhost:8080**
 
-### Step 4: Run the Frontend
+---
+
+## STEP 3: RUN THE FRONTEND
 
 ```bash
-cd frontend
+cd UMTCEMS/frontend
 npm run dev
 ```
 
-Frontend on **http://localhost:5173**
+Frontend runs on **http://localhost:5173**
 
 ---
 
-## Project Structure
-
-```
-backend/
-├── pom.xml                          # Maven dependencies
-├── src/main/java/com/umtcems/
-│   ├── UMTCEMSApplication.java      # Main class - RUN THIS
-│   ├── config/
-│   │   └── CorsConfig.java          # Allows React to connect
-│   ├── model/
-│   │   ├── User.java                # User entity (JPA)
-│   │   ├── Proposal.java             # Proposal entity (JPA)
-│   │   ├── Comment.java             # Comment entity (JPA)
-│   │   ├── PostEventReport.java     # Report entity (JPA)
-│   │   ├── UserRole.java            # Enum: CLUB_REP, ADVISOR, MPP_EXCO, HEPA_STAFF
-│   │   └── ProposalStatus.java      # Enum: PENDING_ADVISOR, APPROVED, etc.
-│   ├── repository/
-│   │   ├── UserRepository.java      # Auto-generates SQL for users
-│   │   ├── ProposalRepository.java  # Auto-generates SQL for proposals
-│   │   ├── CommentRepository.java   # Auto-generates SQL for comments
-│   │   └── PostEventReportRepository.java
-│   └── controller/
-│       ├── UserController.java      # HABAN fills this
-│       ├── ProposalController.java  # ALYSSA fills this
-│       └── ReportController.java    # AIDIL fills this
-└── src/main/resources/
-    └── application.properties       # DB connection config
-```
+## YOUR TASK PER PERSON
 
 ---
 
-## Individual Tasks
+### HABAN → User Management
 
-### HABAN → UserController.java
+**File to edit:** `src/main/java/com/umtcems/controller/UserController.java`
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/users/register` | POST | Register new user |
-| `/api/users/login` | POST | Login |
-| `/api/users/{id}/password` | PUT | Change password |
-| `/api/users/{id}/email` | PUT | Update email |
+**Your 6 endpoints:**
 
-### ALYSSA → ProposalController.java
+| # | Method | URL | What it does |
+|---|--------|-----|--------------|
+| 1 | POST | `/api/users/register` | Create new user account |
+| 2 | POST | `/api/users/login` | Login with email + password |
+| 3 | PUT | `/api/users/{id}/password` | Change password (verify old first) |
+| 4 | PUT | `/api/users/{id}/email` | Change email |
+| 5 | GET | `/api/users` | Get all users (for testing) |
+| 6 | GET | `/api/users/{id}` | Get user by ID |
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/proposals` | POST | Submit new proposal |
-| `/api/proposals/{id}/approve-advisor` | PUT | Advisor approves |
-| `/api/proposals/{id}/request-changes` | PUT | Request amendments |
-| `/api/proposals/{id}/approve-mpp` | PUT | MPP final approval |
-| `/api/proposals/{id}/reject` | PUT | MPP rejects |
-| `/api/proposals/{id}/resubmit` | PUT | Club rep resubmits |
-| `/api/proposals/{id}/comments` | POST | Add comment |
-
-### AIDIL → ReportController.java
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/reports` | POST | Submit post-event report |
-| `/api/reports/analytics` | GET | Get statistics |
-| `/api/reports/venue-clashes` | GET | Check date/venue conflicts |
-| `/api/reports/pending` | GET | List approved events pending report |
+**Steps to complete each endpoint are in the TODO comments inside the file.**
 
 ---
 
-## How JPA Works (No SQL Writing!)
+### ALYSSA → Proposal Workflow
 
-Instead of writing SQL, you call repository methods:
+**File to edit:** `src/main/java/com/umtcems/controller/ProposalController.java`
+
+**Your 10 endpoints:**
+
+| # | Method | URL | What it does |
+|---|--------|-----|--------------|
+| 1 | POST | `/api/proposals` | Submit new event proposal |
+| 2 | GET | `/api/proposals` | Get all proposals |
+| 3 | GET | `/api/proposals/club/{clubName}` | Get proposals by club |
+| 4 | GET | `/api/proposals/{id}` | Get proposal by ID |
+| 5 | PUT | `/api/proposals/{id}/approve-advisor` | Advisor approves → moves to MPP |
+| 6 | PUT | `/api/proposals/{id}/request-changes` | Advisor/MPP requests amendments |
+| 7 | PUT | `/api/proposals/{id}/approve-mpp` | MPP final approval |
+| 8 | PUT | `/api/proposals/{id}/reject` | MPP rejects proposal |
+| 9 | PUT | `/api/proposals/{id}/resubmit` | Club rep resubmits after changes |
+| 10 | POST | `/api/proposals/{id}/comments` | Add comment to proposal |
+
+**Steps to complete each endpoint are in the TODO comments inside the file.**
+
+---
+
+### AIDIL → Post-Event Reports + Analytics
+
+**File to edit:** `src/main/java/com/umtcems/controller/ReportController.java`
+
+**Your 6 endpoints:**
+
+| # | Method | URL | What it does |
+|---|--------|-----|--------------|
+| 1 | POST | `/api/reports` | Submit post-event report |
+| 2 | GET | `/api/reports` | Get all reports |
+| 3 | GET | `/api/reports/proposal/{proposalId}` | Get report by proposal ID |
+| 4 | GET | `/api/reports/analytics` | Get proposal statistics |
+| 5 | GET | `/api/reports/venue-clashes` | Check for date/venue conflicts |
+| 6 | GET | `/api/reports/pending` | List approved events missing reports |
+
+**Steps to complete each endpoint are in the TODO comments inside the file.**
+
+---
+
+## HOW TO CODE YOUR ENDPOINTS
+
+### Pattern for a simple endpoint:
 
 ```java
-// Instead of: SELECT * FROM users WHERE email = 'x'
-userRepository.findByEmail("x");
+@PostMapping("/register")
+public ResponseEntity<?> register(@RequestBody Map<String, String> body) {
+    String email = body.get("email");
+    String password = body.get("password");
+    String name = body.get("name");
 
-// Instead of: SELECT * FROM proposals WHERE status = 'APPROVED'
-proposalRepository.findByStatus(ProposalStatus.APPROVED);
+    // Check if email exists
+    if (userRepository.existsByEmail(email)) {
+        return ResponseEntity.badRequest().body("Email already exists");
+    }
 
-// Instead of: INSERT INTO users VALUES (...)
-userRepository.save(user);
+    // Create new user
+    User user = new User();
+    user.setEmail(email);
+    user.setPassword(password); // In real app: hash the password!
+    user.setName(name);
+    user.setRole(UserRole.valueOf(body.get("role")));
+    user.setClubName(body.get("clubName"));
 
-// Instead of: DELETE FROM proposals WHERE id = 1
-proposalRepository.deleteById(1L);
+    // Save to database
+    user = userRepository.save(user);
+
+    return ResponseEntity.ok(user);
+}
 ```
 
-JPA automatically generates the SQL based on method names!
+### Pattern for a status update:
+
+```java
+@PutMapping("/{id}/approve-mpp")
+public ResponseEntity<?> approveAsMpp(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    // 1. Find the proposal
+    Optional<Proposal> optProposal = proposalRepository.findById(id);
+    if (optProposal.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    }
+
+    // 2. Update status
+    Proposal proposal = optProposal.get();
+    proposal.setStatus(ProposalStatus.APPROVED);
+
+    // 3. Add to history (append to JSON string)
+    String history = proposal.getHistory() + ",APPROVED by MPP";
+    proposal.setHistory(history);
+
+    // 4. Save
+    proposal = proposalRepository.save(proposal);
+
+    // 5. Return
+    return ResponseEntity.ok(proposal);
+}
+```
+
+### Working with related data (comments):
+
+```java
+@PostMapping("/{id}/comments")
+public ResponseEntity<?> addComment(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    Optional<Proposal> optProposal = proposalRepository.findById(id);
+    if (optProposal.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    }
+
+    Proposal proposal = optProposal.get();
+
+    Comment comment = new Comment();
+    comment.setAuthorName(body.get("authorName"));
+    comment.setAuthorRole(UserRole.valueOf(body.get("authorRole")));
+    comment.setContent(body.get("content"));
+    comment.setType(body.get("type"));
+    comment.setTimestamp(LocalDate.now().toString());
+    comment.setProposal(proposal);
+
+    comment = commentRepository.save(comment);
+
+    return ResponseEntity.ok(comment);
+}
+```
 
 ---
 
-## Testing Your API
+## HOW JPA WORKS (You don't write SQL!)
 
-### Using curl:
+Just call these methods and JPA generates the SQL:
+
+```java
+// Find by email
+userRepository.findByEmail("ali@umt.edu.my")
+
+// Find all by status
+proposalRepository.findByStatus(ProposalStatus.APPROVED)
+
+// Find by club name
+proposalRepository.findByClubName("Computer Science Club")
+
+// Save (insert OR update)
+userRepository.save(user)
+
+// Delete
+proposalRepository.deleteById(1L)
+
+// Count all
+proposalRepository.count()
+```
+
+---
+
+## CONNECTING FRONTEND TO BACKEND
+
+### In your React DataContext (`contexts/DataContext.tsx`):
+
+Instead of mock data, call the API:
+
+```javascript
+// Example: Login
+const login = async (email, password) => {
+    const response = await fetch('http://localhost:8080/api/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    });
+    
+    if (response.ok) {
+        const user = await response.json();
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+        return true;
+    }
+    return false;
+};
+
+// Example: Get proposals
+const getProposals = async () => {
+    const response = await fetch('http://localhost:8080/api/proposals');
+    const data = await response.json();
+    setProposals(data);
+};
+```
+
+### Update each frontend page to fetch from backend:
+
+- **Profile page** → Call `PUT /api/users/{id}/email` and `PUT /api/users/{id}/password`
+- **SubmitProposal page** → Call `POST /api/proposals`
+- **ProposalDetails page** → Call `PUT /api/proposals/{id}/approve-advisor`, etc.
+- **PostEventReport page** → Call `POST /api/reports`
+- **Dashboard** → Call `GET /api/reports/analytics`
+
+---
+
+## TESTING YOUR API
+
+### With curl (run in terminal):
 
 ```bash
 # Register a user
@@ -157,48 +302,108 @@ curl -X POST http://localhost:8080/api/users/register \
 
 # Get all users
 curl http://localhost:8080/api/users
+
+# Submit a proposal
+curl -X POST http://localhost:8080/api/proposals \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Tech Talk","clubName":"CS Club","eventDate":"2024-10-15","venue":"Auditorium"}'
+
+# Get all proposals
+curl http://localhost:8080/api/proposals
 ```
 
-### Using Postman:
-1. Create new HTTP Request
-2. Set method and URL
-3. For POST/PUT: Set Body → raw → JSON
+### With Postman:
+1. New Request → Set Method (GET/POST/PUT/DELETE)
+2. Set URL
+3. For POST/PUT: Body → raw → JSON
 4. Send!
 
 ---
 
-## Common Errors
+## COMMON ERRORS
 
-### "Communications link failure"
-→ MySQL not running. Start XAMPP.
-
-### "Access denied for user 'root'"
-→ Wrong password in application.properties. Fix it.
-
-### "Unknown database 'umtcems'"
-→ Database doesn't exist. Run CREATE DATABASE umtcems;
-
-### "Table 'proposals' doesn't exist"
-→ JPA hasn't created it yet. Start the app and it will auto-create tables.
-
-### "CORS error" in browser console
-→ CorsConfig.java not loaded. Make sure it's in the right package.
+| Error | Fix |
+|-------|-----|
+| `Communications link failure` | Start XAMPP MySQL |
+| `Access denied for user 'root'` | Check password in application.properties |
+| `Unknown database 'umtcems'` | Run `CREATE DATABASE umtcems;` |
+| `Table 'proposals' doesn't exist` | Start app — JPA creates tables auto |
+| `CORS error` in browser | Make sure CorsConfig.java is loaded |
+| `404 Not Found` | Check your URL path matches the @RequestMapping |
 
 ---
 
-## Tips
+## WHAT TO DO IF STUCK
 
-1. **Start MySQL FIRST** before running Spring Boot
-2. **Check phpMyAdmin** to see if tables were created
-3. **Use @Autowired** to inject repositories into controllers
-4. **Return ResponseEntity** for proper HTTP status codes
-5. **Use Map<String, Object>** for flexible JSON request bodies
+1. Read the TODO comments in your controller file — they have step-by-step instructions
+2. Check Spring Data JPA docs: method names like `findByEmail` auto-generate SQL
+3. Run `./mvnw spring-boot:run` and check the console output
+4. Ask in WhatsApp group
+5. Ask during lab session
 
 ---
 
-## Still Confused?
+## GIT WORKFLOW
 
-1. Read the TODO comments in each controller file
-2. Check Spring Data JPA documentation for method naming conventions
-3. Ask during lab session
-4. Look at example Spring Boot tutorials online
+1. **Create your branch:**
+   ```bash
+   git checkout -b feature/yourname-backend
+   ```
+
+2. **Code your controller** (only your file, not others' files)
+
+3. **Commit with clear message:**
+   ```bash
+   git add src/main/java/com/umtcems/controller/YourController.java
+   git commit -m "feat: Implement login and register endpoints"
+   ```
+
+4. **Push:**
+   ```bash
+   git push origin feature/yourname-backend
+   ```
+
+5. **When done, create a Pull Request** or tell the team to merge
+
+**IMPORTANT:** Only commit YOUR controller file. Don't touch other people's controller files.
+
+---
+
+## FILE STRUCTURE REMINDER
+
+```
+backend/src/main/java/com/umtcems/
+├── UMTCEMSApplication.java   ← Main class (DO NOT EDIT)
+├── config/
+│   └── CorsConfig.java       ← CORS setup (DO NOT EDIT)
+├── model/
+│   ├── User.java            ← User entity (DO NOT EDIT)
+│   ├── Proposal.java        ← Proposal entity (DO NOT EDIT)
+│   ├── Comment.java        ← Comment entity (DO NOT EDIT)
+│   ├── PostEventReport.java ← Report entity (DO NOT EDIT)
+│   ├── UserRole.java        ← Enum (DO NOT EDIT)
+│   └── ProposalStatus.java ← Enum (DO NOT EDIT)
+├── repository/
+│   ├── UserRepository.java         ← Auto-generates SQL (DO NOT EDIT)
+│   ├── ProposalRepository.java   ← Auto-generates SQL (DO NOT EDIT)
+│   ├── CommentRepository.java    ← Auto-generates SQL (DO NOT EDIT)
+│   └── PostEventReportRepository.java ← Auto-generates SQL (DO NOT EDIT)
+└── controller/
+    ├── UserController.java      ← HABAN EDITS THIS
+    ├── ProposalController.java ← ALYSSA EDITS THIS
+    └── ReportController.java    ← AIDIL EDITS THIS
+```
+
+"DO NOT EDIT" = it's already done, you just use these classes in your controller.
+
+---
+
+## SUCCESS CRITERIA
+
+Your part is DONE when:
+
+- [ ] You can register a new user via API
+- [ ] You can login and get the user back
+- [ ] All your assigned endpoints return correct responses
+- [ ] The React frontend can call your API and display real data
+- [ ] No errors in Spring Boot console when calling your endpoints
