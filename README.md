@@ -31,24 +31,26 @@ A full-stack campus event management system for UMT clubs to submit, approve, an
 ## Prerequisites - What You Need to Install
 
 ### 1. Node.js (for frontend)
-- Download: https://nodejs.org/
-- Get **LTS version**
-- Verify: `node --version`
+- Download: https://nodejs.org/ — get **LTS version**
+- After installing, verify: open terminal and run `node --version`
+- Should show version 18 or 20+
 
 ### 2. Java 17+ (for backend)
-- Download: https://adoptium.net/
-- Get **JDK 17** or higher
-- Verify: `java --version`
+- Download: https://adoptium.net/ — get **JDK 17** (not just JRE)
+- After installing, verify: open terminal and run `java --version`
+- Should show "17.x.x" or higher
 
 ### 3. MySQL / XAMPP (for database)
 - Download XAMPP: https://www.apachefriends.org/
-- Install with MySQL enabled
-- Start Apache and MySQL from XAMPP Control Panel
-- Access phpMyAdmin: http://localhost/phpmyadmin
+- During install, make sure **MySQL** is checked (Apache is optional)
+- After install, open **XAMPP Control Panel**
+- Click **Start** next to MySQL — the row should turn green
+- Open your browser and go to http://localhost/phpmyadmin
 
 ### 4. Git (for version control)
 - Download: https://git-scm.com/download/win
-- Use default settings during install
+- During install, choose **"Git Bash Here"** — it's the easiest option
+- Restart your terminal after install, then verify: `git --version`
 
 ---
 
@@ -63,29 +65,44 @@ cd UMTCEMS
 
 ### Step 2: Create Database
 
-Open **phpMyAdmin** (http://localhost/phpmyadmin) and run:
+Open **phpMyAdmin** (http://localhost/phpmyadmin):
 
+1. Click the **SQL** tab at the top
+2. Paste this SQL command into the text box:
 ```sql
 CREATE DATABASE umtcems;
 ```
+3. Click **Go** or press Enter
 
-JPA will automatically create the database tables when you run the backend.
+If you see a message like "Database umtcems already exists" — that's fine, it means it was already created. JPA will automatically create the database tables when you run the backend.
 
 ### Step 3: Start MySQL
 
 Open **XAMPP Control Panel** → Start **Apache** and **MySQL**
 
-### Step 4: Run Backend
+### Step 4: Configure Database
+
+Before running the backend, check `backend/src/main/resources/application.properties` — the password field may need your MySQL password:
+
+```
+spring.datasource.username=root
+spring.datasource.password=          ← If your MySQL has no password, leave this blank
+```
+
+If you set a password during XAMPP install, put it after the `=`. Save the file.
+
+### Step 5: Run Backend
 
 ```bash
 cd UMTCEMS/backend
 ./mvnw spring-boot:run
 ```
 
-Wait until you see: `Started UMTCEMSApplication in X.XX seconds`
+> **First time only:** Maven will download all Spring Boot dependencies automatically. This can take **2–5 minutes** — do NOT close the window. It will look like nothing is happening. Just wait until you see `Started UMTCEMSApplication in X.XX seconds`.
+
 Backend runs on: **http://localhost:8080**
 
-### Step 5: Run Frontend
+### Step 6: Run Frontend
 
 Open a **new terminal window** (keep backend running):
 
@@ -103,12 +120,21 @@ Frontend runs on: **http://localhost:5173**
 
 You need TWO terminal windows open:
 
-| Terminal 1 | Terminal 2 |
-|-----------|-----------|
-| `cd UMTCEMS && ./mvnw spring-boot:run` (from backend dir) | `npm run dev` (from UMTCEMS root) |
-| Backend on :8080 | Frontend on :5173 |
+**Terminal 1 — Backend** (must stay running):
+```bash
+cd UMTCEMS/backend
+./mvnw spring-boot:run
+```
+Backend will be at http://localhost:8080
 
-Open browser: **http://localhost:5173**
+**Terminal 2 — Frontend** (must stay running):
+```bash
+cd UMTCEMS
+npm run dev
+```
+Frontend will be at http://localhost:5173
+
+Open your browser and go to **http://localhost:5173**
 
 ---
 
@@ -222,13 +248,15 @@ git push origin feature/yourname-backend
 
 | Error | Fix |
 |-------|-----|
-| `npm is not recognized` | Restart terminal, or reinstall Node.js |
-| `Communications link failure` | Start XAMPP → Apache + MySQL |
-| `Access denied for user 'root'` | Add your MySQL password to `application.properties` |
-| `Unknown database 'umtcems'` | Run `CREATE DATABASE umtcems;` in phpMyAdmin |
+| `npm is not recognized` | Restart your terminal, or reinstall Node.js |
+| Maven/Gradle download seems stuck on first run | Wait 2–5 minutes. First run downloads ~100MB of dependencies. DO NOT close the window. |
+| `Communications link failure` | Open XAMPP Control Panel → Start **MySQL** |
+| `Access denied for user 'root'` | Edit `application.properties` — add your MySQL password after `=` on the password line |
+| `Unknown database 'umtcems'` | Go to http://localhost/phpmyadmin → SQL tab → run `CREATE DATABASE umtcems;` |
 | `CORS error` in browser | Make sure backend is running on port 8080 |
-| `Port 5173 is already in use` | Vite will use next port (5174) automatically |
-| Java errors in VS Code | Install "Extension Pack for Java" in VS Code |
+| `Port 5173 is already in use` | Vite will automatically use 5174 instead — check the terminal output |
+| Java errors in VS Code | Install **"Extension Pack for Java"** extension in VS Code |
+| `Table 'proposals' doesn't exist` | Start the app — JPA creates tables automatically on first run |
 
 ---
 

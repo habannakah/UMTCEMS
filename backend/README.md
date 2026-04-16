@@ -42,11 +42,15 @@ That's it! JPA will create the tables automatically when you run the app.
 
 ### 1.3: Configure Database
 Edit `backend/src/main/resources/application.properties`:
-```properties
+
+```
 spring.datasource.url=jdbc:mysql://localhost:3306/umtcems
 spring.datasource.username=root
-spring.datasource.password=
+spring.datasource.password=          ← If your MySQL has no password, leave this blank
 ```
+
+- If your MySQL has **no password** (default for XAMPP), leave `password=` empty
+- If you **set a password** during XAMPP install, type it after the `=`
 
 If your MySQL has a password, add it. XAMPP default = no password.
 
