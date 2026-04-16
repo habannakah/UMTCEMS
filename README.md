@@ -147,11 +147,28 @@ UMTCEMS/
 
 ## Individual Tasks - Who Does What
 
-| Person | Controller | What They Build |
-|--------|-----------|-----------------|
-| **HABAN** | `UserController.java` | Register, Login, Change Password, Update Email |
-| **ALYSSA** | `ProposalController.java` | Submit Proposal, Approve/Reject, Comments |
-| **AIDIL** | `ReportController.java` | Post-Event Reports, Analytics, Venue Clashes |
+Based on the use case modules:
+- **Manage user accounts** → HABAN
+- **Generate analysis report** → HABAN
+- **Manage event proposal** → ALYSSA + AIDIL (shared)
+- **Manage post event report** → AIDIL
+
+| Person | Frontend | Backend |
+|--------|----------|---------|
+| **HABAN** | Profile page, Analytics page | UserController.java |
+| **ALYSSA** | SubmitProposal, ProposalDetails (evaluation) | ProposalController.java |
+| **AIDIL** | PostEventReport, ProposalDetails (evaluation) | ReportController.java |
+
+### Task Details
+
+| Person | Frontend Pages They Own | Backend Controller |
+|--------|------------------------|-------------------|
+| **HABAN** | `Profile.tsx` — register, login, change password/email | `UserController.java` — register, login, password, email |
+| | `AnalyticsMockup.tsx` → real analytics → analytics for MPP/HEPA | *Analytics built into ReportController* |
+| **ALYSSA** | `SubmitProposal.tsx` — submit new proposal | `ProposalController.java` — submit, approve, reject, comments |
+| | `ProposalDetails.tsx` — advisor evaluation view | *Shared evaluation endpoints* |
+| **AIDIL** | `PostEventReport.tsx` — submit post-event report | `ReportController.java` — submit report, analytics, venue clashes |
+| | `ProposalDetails.tsx` — MPP final approval view | *Shared evaluation endpoints* |
 
 **Each person fills in their assigned controller — read the TODO comments inside each file.**
 
@@ -256,9 +273,11 @@ GET    /api/reports/pending
 
 ## Team Members
 
-- **Aidil** — Post-Event Reports + MPP Approval
-- **Alyssa** — Proposal Submission + Evaluation Workflow
-- **Haban** — User Accounts + Analytics
+| Name | Modules |
+|------|---------|
+| **Haban** | Manage user accounts + Generate analysis report |
+| **Alyssa** | Manage event proposal (evaluation workflow) |
+| **Aidil** | Manage event proposal (shared) + Manage post event report |
 
 ---
 

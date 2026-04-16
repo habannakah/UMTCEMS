@@ -4,13 +4,21 @@
 
 ---
 
-## WHO DOES WHAT
+## WHO DOES WHAT (Based on Use Case Modules)
 
-| Person | Controller | Files They Code | Endpoints They Build |
-|--------|-----------|----------------|---------------------|
-| **HABAN** | `UserController.java` | `controller/UserController.java` + `service/UserService.java` | Register, Login, Change Password, Update Email |
-| **ALYSSA** | `ProposalController.java` | `controller/ProposalController.java` + `service/ProposalService.java` | Submit Proposal, Approve/Reject, Comments |
-| **AIDIL** | `ReportController.java` | `controller/ReportController.java` + `service/ReportService.java` | Submit Report, Analytics, Venue Clash Check |
+Based on your module.txt assignment:
+- **Manage user accounts** → HABAN
+- **Generate analysis report** → HABAN
+- **Manage event proposal** → ALYSSA + AIDIL (shared)
+- **Manage post event report** → AIDIL
+
+| Person | Module | Backend Controller | Endpoints They Build |
+|--------|--------|-------------------|---------------------|
+| **HABAN** | User accounts + Analytics | `UserController.java` | Register, Login, Change Password, Update Email |
+| **ALYSSA** | Event proposal (evaluation) | `ProposalController.java` | Submit Proposal, Approve/Reject, Comments |
+| **AIDIL** | Event proposal (shared) + Post-event report | `ReportController.java` | Submit Report, Analytics, Venue Clash Check |
+
+**Note for event proposal:** ALYSSA and AIDIL share the same `ProposalController.java`. ALYSSA handles proposal submission + advisor review flow. AIDIL handles MPP final approval + post-event report linking.
 
 **Each person is RESPONSIBLE for their own controller. You code YOUR endpoints. You test YOUR endpoints.**
 
@@ -75,7 +83,9 @@ Frontend runs on **http://localhost:5173**
 
 ---
 
-### HABAN → User Management
+### HABAN → User Accounts + Analytics
+
+**Module:** Manage user accounts + Generate analysis report
 
 **File to edit:** `src/main/java/com/umtcems/controller/UserController.java`
 
@@ -90,15 +100,19 @@ Frontend runs on **http://localhost:5173**
 | 5 | GET | `/api/users` | Get all users (for testing) |
 | 6 | GET | `/api/users/{id}` | Get user by ID |
 
+**Also:** Enhance `AnalyticsMockup.tsx` in frontend to show real data from `/api/reports/analytics`.
+
 **Steps to complete each endpoint are in the TODO comments inside the file.**
 
 ---
 
-### ALYSSA → Proposal Workflow
+### ALYSSA → Event Proposal (Proposal Submission + Advisor Review)
+
+**Module:** Manage event proposal (shared with Aidil)
 
 **File to edit:** `src/main/java/com/umtcems/controller/ProposalController.java`
 
-**Your 10 endpoints:**
+**Your endpoints in the shared controller:**
 
 | # | Method | URL | What it does |
 |---|--------|-----|--------------|
@@ -107,21 +121,25 @@ Frontend runs on **http://localhost:5173**
 | 3 | GET | `/api/proposals/club/{clubName}` | Get proposals by club |
 | 4 | GET | `/api/proposals/{id}` | Get proposal by ID |
 | 5 | PUT | `/api/proposals/{id}/approve-advisor` | Advisor approves → moves to MPP |
-| 6 | PUT | `/api/proposals/{id}/request-changes` | Advisor/MPP requests amendments |
-| 7 | PUT | `/api/proposals/{id}/approve-mpp` | MPP final approval |
-| 8 | PUT | `/api/proposals/{id}/reject` | MPP rejects proposal |
-| 9 | PUT | `/api/proposals/{id}/resubmit` | Club rep resubmits after changes |
-| 10 | POST | `/api/proposals/{id}/comments` | Add comment to proposal |
+| 6 | PUT | `/api/proposals/{id}/request-changes` | Advisor requests amendments |
+| 7 | PUT | `/api/proposals/{id}/resubmit` | Club rep resubmits after changes |
+| 8 | POST | `/api/proposals/{id}/comments` | Add comment to proposal |
+
+**Frontend:** `SubmitProposal.tsx` (submit new proposal) + advisor view in `ProposalDetails.tsx`
 
 **Steps to complete each endpoint are in the TODO comments inside the file.**
 
 ---
 
-### AIDIL → Post-Event Reports + Analytics
+### AIDIL → Event Proposal (MPP Approval) + Post-Event Report
+
+**Module:** Manage event proposal (shared with Alyssa) + Manage post event report
 
 **File to edit:** `src/main/java/com/umtcems/controller/ReportController.java`
 
-**Your 6 endpoints:**
+**Also shared in:** `ProposalController.java` (MPP endpoints)
+
+**Your endpoints in ReportController:**
 
 | # | Method | URL | What it does |
 |---|--------|-----|--------------|
@@ -131,6 +149,15 @@ Frontend runs on **http://localhost:5173**
 | 4 | GET | `/api/reports/analytics` | Get proposal statistics |
 | 5 | GET | `/api/reports/venue-clashes` | Check for date/venue conflicts |
 | 6 | GET | `/api/reports/pending` | List approved events missing reports |
+
+**Your endpoints in ProposalController (MPP part, shared with Alyssa):**
+
+| # | Method | URL | What it does |
+|---|--------|-----|--------------|
+| 9 | PUT | `/api/proposals/{id}/approve-mpp` | MPP final approval |
+| 10 | PUT | `/api/proposals/{id}/reject` | MPP rejects proposal |
+
+**Frontend:** `PostEventReport.tsx` (submit report) + MPP view in `ProposalDetails.tsx` + `ExcoDashboard.tsx` (MPPs approval queue)
 
 **Steps to complete each endpoint are in the TODO comments inside the file.**
 
