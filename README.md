@@ -90,7 +90,7 @@ Backend runs on: **http://localhost:8080**
 Open a **new terminal window** (keep backend running):
 
 ```bash
-cd UMTCEMS/frontend
+cd UMTCEMS
 npm install    # only first time, or after pulling updates
 npm run dev
 ```
@@ -105,7 +105,7 @@ You need TWO terminal windows open:
 
 | Terminal 1 | Terminal 2 |
 |-----------|-----------|
-| `cd backend && ./mvnw spring-boot:run` | `cd frontend && npm run dev` |
+| `cd UMTCEMS && ./mvnw spring-boot:run` (from backend dir) | `npm run dev` (from UMTCEMS root) |
 | Backend on :8080 | Frontend on :5173 |
 
 Open browser: **http://localhost:5173**
@@ -115,14 +115,13 @@ Open browser: **http://localhost:5173**
 ## Project Structure
 
 ```
-UMTCEMS/
-├── frontend/                 # React app
-│   ├── src/
-│   │   ├── pages/            # All page components
-│   │   ├── components/       # Reusable UI components
-│   │   ├── contexts/         # Auth + Data context
-│   │   ├── App.tsx           # Routes
-│   │   └── types.ts          # TypeScript types
+UMTCEMS/                      # React app (no frontend/ subdir)
+│   ├── pages/                # All page components
+│   ├── components/          # Reusable UI components
+│   ├── contexts/             # Auth + Data context
+│   ├── App.tsx               # Routes
+│   ├── index.tsx             # Entry point
+│   ├── types.ts              # TypeScript types
 │   ├── package.json
 │   └── vite.config.ts
 │
