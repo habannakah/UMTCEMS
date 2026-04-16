@@ -10,7 +10,7 @@ A full-stack campus event management system for UMT clubs to submit, approve, an
 |-------|------------|
 | **Frontend** | React 19 + TypeScript + Vite |
 | **Backend** | Spring Boot 3.2 (Java 17) |
-| **Database** | MySQL via Railway cloud DB |
+| **Database** | PostgreSQL via Supabase cloud DB |
 | **ORM** | Spring Data JPA |
 
 ### Frontend Dependencies (already installed)
@@ -40,10 +40,10 @@ A full-stack campus event management system for UMT clubs to submit, approve, an
 - After installing, verify: open terminal and run `java --version`
 - Should show "17.x.x" or higher
 
-### 3. MySQL (via Railway — no local install needed)
-- No need to install MySQL locally — Railway hosts the database
-- One person creates the Railway MySQL project and shares credentials with the team
-- See `backend/RAILWAY_SETUP.md` for step-by-step instructions
+### 3. PostgreSQL (via Supabase — no local install needed)
+- No need to install PostgreSQL locally — Supabase hosts the database
+- One person created the Supabase project and shares credentials with the team
+- See `backend/SUPABASE_SETUP.md` for step-by-step instructions
 
 ### 4. Git (for version control)
 - Download: https://git-scm.com/download/win
@@ -74,29 +74,31 @@ CREATE DATABASE umtcems;
 
 If you see a message like "Database umtcems already exists" — that's fine, it means it was already created. JPA will automatically create the database tables when you run the backend.
 
-### Step 3: Railway Handles the Database
-- No local MySQL needed — Railway hosts the database for the whole team
-- Follow the setup in `backend/RAILWAY_SETUP.md`
+### Step 3: Supabase Handles the Database
+- No local PostgreSQL needed — Supabase hosts the database for the whole team
+- Follow the setup in `backend/SUPABASE_SETUP.md`
 
 ### Step 4: Configure Backend
 
-> **For team development, use Railway cloud DB** — all 3 teammates share the same database. See `backend/RAILWAY_SETUP.md` for full guide.
+> **For team development, use Supabase cloud DB** — all 3 teammates share the same database. See `backend/SUPABASE_SETUP.md` for full guide.
 
 **Short version:**
 
-1. One person creates a Railway MySQL project → shares the `MYSQL_URL` with the team
+1. One person shares the Supabase connection string with the team
 2. Everyone copies `backend/src/main/resources/application.properties.template` → `application.properties`
-3. Fill in the Railway connection string from step 1
+3. Fill in the Supabase connection details
 
 ```properties
-# Example Railway connection (from Railway dashboard MYSQL_URL)
-spring.datasource.url=jdbc:mysql://mysql.railway.internal:3306/railway
-spring.datasource.username=root
-spring.datasource.password=abc123def456
+# Supabase PostgreSQL connection
+spring.datasource.url=jdbc:postgresql://db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=Umtcems2105_.
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 4. Start the backend — JPA auto-creates all tables (`ddl-auto=update`)
-5. One person runs `backend/src/main/resources/seed-data.sql` once in the Railway SQL editor
+5. One person runs `backend/src/main/resources/seed-data.sql` once in the Supabase SQL Editor
 
 > ⚠️ `application.properties` is gitignored — credentials will never be committed.
 
@@ -173,8 +175,8 @@ UMTCEMS/                      # React app (no frontend/ subdir)
 │   └── src/main/resources/
 │       ├── application.properties   # DB config (gitignored — use template)
 │       ├── application.properties.template  # Shareable config
-│       ├── seed-data.sql           # Initial data (run once)
-│       └── RAILWAY_SETUP.md        # Cloud DB guide for team
+│       ├── seed-data.sql           # Initial data PostgreSQL (run once)
+│       └── SUPABASE_SETUP.md       # Cloud DB guide for team
 │
 ├── TASK_SPLIT.md             # Individual task assignments
 └── package.json              # (root - not used)
@@ -262,14 +264,13 @@ git push origin feature/yourname-backend
 |-------|-----|
 | `npm is not recognized` | Restart your terminal, or reinstall Node.js |
 | Maven/Gradle download seems stuck on first run | Wait 2–5 minutes. First run downloads ~100MB of dependencies. DO NOT close the window. |
-| `Communications link failure` | Check your Railway MySQL is running in the Railway dashboard. If you restarted it, the host may have changed — update `application.properties` |
-| `Access denied for user 'root'` | Check your `spring.datasource.password=` in `application.properties` matches the Railway `MYSQL_URL` password |
-| `Unknown database 'umtcems'` | In Railway dashboard, create a database named `umtcems`, OR update JPA entities to use the default `railway` database name |
+| `Communications link failure` | Check Supabase project is active in the dashboard. If it restarted, verify your `application.properties` host/port are correct |
+| `Access denied for user 'postgres'` | Check your `spring.datasource.password=` matches the Supabase password exactly |
 | `CORS error` in browser | Make sure backend is running on port 8080 |
 | `Port 5173 is already in use` | Vite will automatically use 5174 instead — check the terminal output |
 | Java errors in VS Code | Install **"Extension Pack for Java"** extension in VS Code |
-| `Table 'proposals' doesn't exist` | Start the app — JPA creates tables automatically on first run (`ddl-auto=update`) |
-| Railway connection refused | Check Railway MySQL is running (green status in dashboard). Free tier VMs spin down after 1 hour of inactivity — click Start to wake it up |
+| `Table 'users' doesn't exist` | Start the app — JPA creates tables automatically on first run (`ddl-auto=update`) |
+| Supabase connection refused | Log in to supabase.com/dashboard to wake up the project. Free tier spins down after inactivity |
 
 ---
 
@@ -325,6 +326,6 @@ GET    /api/reports/pending
 
 1. Read the TODO comments in your controller file
 2. Read `backend/README.md` for detailed backend instructions
-3. Read `backend/RAILWAY_SETUP.md` if your team uses a cloud database
+3. Read `backend/SUPABASE_SETUP.md` for Supabase database setup
 4. Ask in WhatsApp group
 5. Ask during lab session

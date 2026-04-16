@@ -32,27 +32,27 @@ cd UMTCEMS
 git pull origin main
 ```
 
-### 1.2: Create MySQL Database
-Open **phpMyAdmin** (http://localhost/phpmyadmin) and run:
-```sql
-CREATE DATABASE umtcems;
-```
+### 1.2: Supabase PostgreSQL (No Local Database)
 
-That's it! JPA will create the tables automatically when you run the app.
+No local database needed — Supabase hosts PostgreSQL for the whole team.
+
+1. Copy `application.properties.template` to `application.properties`
+2. Fill in the Supabase connection string (already set up by your teammate)
+3. See `SUPABASE_SETUP.md` for full details
+
+JPA will create the tables automatically when you run the app.
 
 ### 1.3: Configure Database
 Edit `backend/src/main/resources/application.properties`:
+Edit `backend/src/main/resources/application.properties` (copy from `application.properties.template`):
 
+```properties
+spring.datasource.url=jdbc:postgresql://db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=Umtcems2105_.
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/umtcems
-spring.datasource.username=root
-spring.datasource.password=          ← If your MySQL has no password, leave this blank
-```
-
-- If your MySQL has **no password** (default for XAMPP), leave `password=` empty
-- If you **set a password** during XAMPP install, type it after the `=`
-
-If your MySQL has a password, add it. XAMPP default = no password.
 
 ---
 
@@ -355,10 +355,9 @@ curl http://localhost:8080/api/proposals
 
 | Error | Fix |
 |-------|-----|
-| `Communications link failure` | Start XAMPP MySQL |
-| `Access denied for user 'root'` | Check password in application.properties |
-| `Unknown database 'umtcems'` | Run `CREATE DATABASE umtcems;` |
-| `Table 'proposals' doesn't exist` | Start app — JPA creates tables auto |
+| `Communications link failure` | Check Supabase is active at supabase.com/dashboard. The project may have spun down from inactivity — log in to wake it up |
+| `Access denied for user 'postgres'` | Verify your `spring.datasource.password=` matches the Supabase password |
+| `Table 'users' doesn't exist` | Start the app — JPA creates tables automatically (`ddl-auto=update`) |
 | `CORS error` in browser | Make sure CorsConfig.java is loaded |
 | `404 Not Found` | Check your URL path matches the @RequestMapping |
 
