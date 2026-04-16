@@ -7,7 +7,7 @@ interface DataContextType {
   editProposal: (id: string, data: Partial<Proposal>) => void;
   updateProposalStatus: (id: string, status: ProposalStatus, actorName: string, comment?: string) => void;
   addComment: (proposalId: string, comment: Omit<Comment, 'id' | 'timestamp'>) => void;
-  submitReport: (proposalId: string, reportData: { reportFile: string; photos: string[] }) => void;
+  submitReport: (proposalId: string, reportData: { reportFile: string; photos: string[]; actualAttendance?: number; outcomesSummary?: string; budgetSpent?: string; problemsFaced?: string; improvements?: string }) => void;
   getStats: (role: UserRole, clubName?: string) => any;
 }
 
@@ -428,7 +428,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }));
   };
 
-  const submitReport = (proposalId: string, reportData: { reportFile: string; photos: string[] }) => {
+  const submitReport = (proposalId: string, reportData: { reportFile: string; photos: string[]; actualAttendance?: number; outcomesSummary?: string; budgetSpent?: string; problemsFaced?: string; improvements?: string }) => {
       setProposals(prev => prev.map(p => {
           if (p.id !== proposalId) return p;
           return {

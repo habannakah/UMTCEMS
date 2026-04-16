@@ -55,5 +55,10 @@ export interface Proposal {
     reportFile: string;
     photos: string[];
     submittedDate: string;
+    actualAttendance?: number;
+    outcomesSummary?: string;
+    budgetSpent?: string;
+    problemsFaced?: string;
+    improvements?: string;
   };
 }
