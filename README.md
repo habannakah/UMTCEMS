@@ -10,7 +10,7 @@ A full-stack campus event management system for UMT clubs to submit, approve, an
 |-------|------------|
 | **Frontend** | React 19 + TypeScript + Vite |
 | **Backend** | Spring Boot 3.2 (Java 17) |
-| **Database** | MySQL (via XAMPP) |
+| **Database** | MySQL via XAMPP or Railway cloud DB |
 | **ORM** | Spring Data JPA |
 
 ### Frontend Dependencies (already installed)
@@ -80,16 +80,27 @@ If you see a message like "Database umtcems already exists" — that's fine, it 
 
 Open **XAMPP Control Panel** → Start **Apache** and **MySQL**
 
-### Step 4: Configure Database
+### Step 4: Configure Database Connection
 
-Before running the backend, check `backend/src/main/resources/application.properties` — the password field may need your MySQL password:
+**Two options — pick one for your team:**
 
+#### Option A: Local MySQL (XAMPP) — Default for solo dev
+1. Copy `backend/src/main/resources/application.properties.template` to `application.properties`
+2. Edit it:
 ```
+spring.datasource.url=jdbc:mysql://localhost:3306/umtcems
 spring.datasource.username=root
-spring.datasource.password=          ← If your MySQL has no password, leave this blank
+spring.datasource.password=          ← leave blank if XAMPP MySQL has no password
 ```
 
-If you set a password during XAMPP install, put it after the `=`. Save the file.
+#### Option B: Railway Cloud DB — Shared across all 3 teammates
+> One person creates the Railway project and shares the connection string.
+
+1. Copy `backend/src/main/resources/application.properties.template` to `application.properties`
+2. Follow the full guide in **`backend/RAILWAY_SETUP.md`**
+3. The short version: replace the URL/username/password with the values from Railway dashboard
+
+> ⚠️ `application.properties` is gitignored — it will never be committed with your credentials.
 
 ### Step 5: Run Backend
 
@@ -162,7 +173,10 @@ UMTCEMS/                      # React app (no frontend/ subdir)
 │   │       ├── ProposalController.java ← ALYSSA
 │   │       └── ReportController.java  ← AIDIL
 │   └── src/main/resources/
-│       └── application.properties  # DB config
+│       ├── application.properties   # DB config (gitignored — use template)
+│       ├── application.properties.template  # Shareable config
+│       ├── seed-data.sql           # Initial data (run once)
+│       └── RAILWAY_SETUP.md        # Cloud DB guide for team
 │
 ├── TASK_SPLIT.md             # Individual task assignments
 └── package.json              # (root - not used)
@@ -312,5 +326,6 @@ GET    /api/reports/pending
 
 1. Read the TODO comments in your controller file
 2. Read `backend/README.md` for detailed backend instructions
-3. Ask in WhatsApp group
-4. Ask during lab session
+3. Read `backend/RAILWAY_SETUP.md` if your team uses a cloud database
+4. Ask in WhatsApp group
+5. Ask during lab session
