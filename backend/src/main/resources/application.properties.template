@@ -1,0 +1,28 @@
+# ============================================================
+# UMTCEMS Backend Configuration
+# Copy this file to application.properties and fill in your values
+# ============================================================
+
+# Server
+server.port=8080
+
+# MySQL / Railway Connection
+# For local XAMPP MySQL:
+#   spring.datasource.url=jdbc:mysql://localhost:3306/umtcems
+# For Railway cloud DB (from Railway dashboard):
+#   spring.datasource.url=jdbc:mysql://<host>:<port>/umtcems
+spring.datasource.url=jdbc:mysql://localhost:3306/umtcems
+spring.datasource.username=root
+spring.datasource.password=YOUR_PASSWORD_HERE
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# JDBC
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# CORS - allow Vite dev server
+spring.web.cors.allowed-origins=http://localhost:5173
