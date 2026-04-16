@@ -1,111 +1,114 @@
 # UMTCEMS - Universiti Malaysia Terengganu Club Event Management System
 
-A web-based event management system for campus events, built with React, TypeScript, and Vite.
+A full-stack campus event management system for UMT clubs to submit, approve, and manage event proposals.
 
-## Project Overview
-
-UMTCEMS allows users to submit, approve, and manage campus event proposals. Features include:
-- Event proposal submission and approval workflow
-- Dashboard with analytics
-- Event reporting
-- User profiles
-
-## Team Members
-
-- Aidil
-- Alyssa
-- Haban
+---
 
 ## Tech Stack
 
-- **Frontend**: React 19 + TypeScript
-- **Build Tool**: Vite
-- **Routing**: React Router DOM
-- **Charts**: Recharts
-- **Icons**: Lucide React
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React 19 + TypeScript + Vite |
+| **Backend** | Spring Boot 3.2 (Java 17) |
+| **Database** | MySQL (via XAMPP) |
+| **ORM** | Spring Data JPA |
+
+### Frontend Dependencies (already installed)
+- `react`, `react-dom`
+- `react-router-dom`
+- `recharts` (charts)
+- `lucide-react` (icons)
+
+### Backend Dependencies (already installed)
+- Spring Boot Starter Web
+- Spring Data JPA
+- MySQL Connector
+- Lombok
+- Validation
 
 ---
 
-## Getting Started (For Teammates)
+## Prerequisites - What You Need to Install
 
-### Prerequisites
+### 1. Node.js (for frontend)
+- Download: https://nodejs.org/
+- Get **LTS version**
+- Verify: `node --version`
 
-You need **Node.js** installed on your computer.
-- Download from: https://nodejs.org/
-- Get the **LTS** version (recommended)
+### 2. Java 17+ (for backend)
+- Download: https://adoptium.net/
+- Get **JDK 17** or higher
+- Verify: `java --version`
 
-### Step 1: Install Git (If You Haven't)
+### 3. MySQL / XAMPP (for database)
+- Download XAMPP: https://www.apachefriends.org/
+- Install with MySQL enabled
+- Start Apache and MySQL from XAMPP Control Panel
+- Access phpMyAdmin: http://localhost/phpmyadmin
 
-1. Download Git from: https://git-scm.com/download/win
-2. Run the installer with default settings
-3. Restart your computer after installation
+### 4. Git (for version control)
+- Download: https://git-scm.com/download/win
+- Use default settings during install
 
-### Step 2: Clone the Repository
+---
 
-Open **Git Bash** (installed with Git) and run:
+## Quick Setup
+
+### Step 1: Clone the Repository
 
 ```bash
-cd /c/Users/aidil/OneDrive/Desktop/Projects/AppDevMain
-
 git clone https://github.com/aidil2105/UMTCEMS.git
-
 cd UMTCEMS
 ```
 
-> **Note**: If you get "permission denied" errors, contact the repo owner to add you as a collaborator.
+### Step 2: Create Database
 
-### Step 3: Install Dependencies
+Open **phpMyAdmin** (http://localhost/phpmyadmin) and run:
 
-In the UMTCEMS folder, run:
-
-```bash
-npm install
+```sql
+CREATE DATABASE umtcems;
 ```
 
-This will install all the libraries needed for the project. Wait for it to finish.
+JPA will automatically create the database tables when you run the backend.
 
-### Step 4: Run the Project Locally
+### Step 3: Start MySQL
+
+Open **XAMPP Control Panel** → Start **Apache** and **MySQL**
+
+### Step 4: Run Backend
 
 ```bash
+cd UMTCEMS/backend
+./mvnw spring-boot:run
+```
+
+Wait until you see: `Started UMTCEMSApplication in X.XX seconds`
+Backend runs on: **http://localhost:8080**
+
+### Step 5: Run Frontend
+
+Open a **new terminal window** (keep backend running):
+
+```bash
+cd UMTCEMS/frontend
+npm install    # only first time, or after pulling updates
 npm run dev
 ```
 
-Then open your browser and go to: **http://localhost:5173**
+Frontend runs on: **http://localhost:5173**
 
 ---
 
-## How to Update the Project (Git Workflow)
+## Running Both Simultaneously
 
-### Before You Start Coding: Pull Latest Changes
+You need TWO terminal windows open:
 
-Always pull before you start working to avoid merge conflicts:
+| Terminal 1 | Terminal 2 |
+|-----------|-----------|
+| `cd backend && ./mvnw spring-boot:run` | `cd frontend && npm run dev` |
+| Backend on :8080 | Frontend on :5173 |
 
-```bash
-git pull origin main
-```
-
-### After Making Changes: Save Your Work
-
-1. **Check what files you changed:**
-   ```bash
-   git status
-   ```
-
-2. **Add files you want to commit:**
-   ```bash
-   git add filename.ts    # for single file
-   git add .              # for all changed files
-   ```
-
-3. **Commit (save) your changes:**
-   ```bash
-   git commit -m "Describe what you did"
-   ```
-
-4. **Push to GitHub:**
-   ```bash
-   git push origin main
-   ```
+Open browser: **http://localhost:5173**
 
 ---
 
@@ -113,40 +116,155 @@ git pull origin main
 
 ```
 UMTCEMS/
-├── components/       # Reusable UI components
-├── contexts/          # React context for state management
-├── pages/             # Page components
-│   ├── Auth.tsx           # Login page
-│   ├── Dashboard.tsx      # Main dashboard
-│   ├── SubmitProposal.tsx # Submit new event
-│   ├── ApprovedEvents.tsx # View approved events
-│   ├── Analytics.tsx      # View analytics/charts
-│   └── ...
-├── App.tsx            # Main app component
-├── index.tsx         # Entry point
-└── package.json      # Dependencies
+├── frontend/                 # React app
+│   ├── src/
+│   │   ├── pages/            # All page components
+│   │   ├── components/       # Reusable UI components
+│   │   ├── contexts/         # Auth + Data context
+│   │   ├── App.tsx           # Routes
+│   │   └── types.ts          # TypeScript types
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── backend/                  # Spring Boot app
+│   ├── src/main/java/com/umtcems/
+│   │   ├── UMTCEMSApplication.java  # Main class - RUN THIS
+│   │   ├── config/                  # CORS config (done)
+│   │   ├── model/                   # JPA entities (done)
+│   │   ├── repository/              # JPA repositories (done)
+│   │   └── controller/              # API endpoints (FILL IN)
+│   │       ├── UserController.java     ← HABAN
+│   │       ├── ProposalController.java ← ALYSSA
+│   │       └── ReportController.java  ← AIDIL
+│   └── src/main/resources/
+│       └── application.properties  # DB config
+│
+├── TASK_SPLIT.md             # Individual task assignments
+└── package.json              # (root - not used)
 ```
 
 ---
 
-## Common Issues
+## Individual Tasks - Who Does What
 
-### "npm is not recognized"
+| Person | Controller | What They Build |
+|--------|-----------|-----------------|
+| **HABAN** | `UserController.java` | Register, Login, Change Password, Update Email |
+| **ALYSSA** | `ProposalController.java` | Submit Proposal, Approve/Reject, Comments |
+| **AIDIL** | `ReportController.java` | Post-Event Reports, Analytics, Venue Clashes |
 
-Restart your terminal or computer. If still not working, reinstall Node.js.
+**Each person fills in their assigned controller — read the TODO comments inside each file.**
 
-### "git is not recognized"
+### Files Each Person Edits
 
-Install Git first (see Step 1 above).
+```
+backend/src/main/java/com/umtcems/controller/
+├── UserController.java      ← HABAN codes this
+├── ProposalController.java  ← ALYSSA codes this
+└── ReportController.java    ← AIDIL codes this
+```
 
-### "Port 5173 is already in use"
+### Files You DON'T Touch (already done)
 
-Another process is using that port. You can either:
-- Stop the other process
-- Or Vite will automatically use the next available port
+```
+backend/src/main/java/com/umtcems/
+├── UMTCEMSApplication.java   ← RUN THIS (don't edit)
+├── config/CorsConfig.java    ← Done (don't edit)
+├── model/*.java             ← Done (don't edit)
+└── repository/*.java         ← Done (don't edit)
+```
+
+---
+
+## Git Workflow
+
+### Before Starting: Pull Latest Changes
+
+```bash
+git pull origin main
+```
+
+### Create Your Branch
+
+```bash
+git checkout -b feature/yourname-backend
+```
+
+### After Coding: Save Your Work
+
+```bash
+git add src/main/java/com/umtcems/controller/YourController.java
+git commit -m "feat: Implement login and register endpoints"
+git push origin feature/yourname-backend
+```
+
+**IMPORTANT: Only commit YOUR controller file. Do not touch other people's files.**
+
+---
+
+## Common Issues & Fixes
+
+| Error | Fix |
+|-------|-----|
+| `npm is not recognized` | Restart terminal, or reinstall Node.js |
+| `Communications link failure` | Start XAMPP → Apache + MySQL |
+| `Access denied for user 'root'` | Add your MySQL password to `application.properties` |
+| `Unknown database 'umtcems'` | Run `CREATE DATABASE umtcems;` in phpMyAdmin |
+| `CORS error` in browser | Make sure backend is running on port 8080 |
+| `Port 5173 is already in use` | Vite will use next port (5174) automatically |
+| Java errors in VS Code | Install "Extension Pack for Java" in VS Code |
+
+---
+
+## API Endpoints Summary
+
+### User Management (HABAN)
+```
+POST   /api/users/register
+POST   /api/users/login
+PUT    /api/users/{id}/password
+PUT    /api/users/{id}/email
+GET    /api/users
+GET    /api/users/{id}
+```
+
+### Proposal Workflow (ALYSSA)
+```
+POST   /api/proposals
+GET    /api/proposals
+GET    /api/proposals/{id}
+GET    /api/proposals/club/{clubName}
+PUT    /api/proposals/{id}/approve-advisor
+PUT    /api/proposals/{id}/request-changes
+PUT    /api/proposals/{id}/approve-mpp
+PUT    /api/proposals/{id}/reject
+PUT    /api/proposals/{id}/resubmit
+POST   /api/proposals/{id}/comments
+```
+
+### Reports & Analytics (AIDIL)
+```
+POST   /api/reports
+GET    /api/reports
+GET    /api/reports/proposal/{proposalId}
+GET    /api/reports/analytics
+GET    /api/reports/venue-clashes
+GET    /api/reports/pending
+```
+
+---
+
+## Team Members
+
+- **Aidil** — Post-Event Reports + MPP Approval
+- **Alyssa** — Proposal Submission + Evaluation Workflow
+- **Haban** — User Accounts + Analytics
 
 ---
 
 ## Need Help?
 
-Ask the repo owner or check the GitHub issues page if something is broken.
+1. Read the TODO comments in your controller file
+2. Read `backend/README.md` for detailed backend instructions
+3. Ask in WhatsApp group
+4. Ask during lab session
