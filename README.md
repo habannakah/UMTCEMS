@@ -22,7 +22,7 @@ A full-stack campus event management system for UMT clubs to submit, approve, an
 ### Backend Dependencies (already installed)
 - Spring Boot Starter Web
 - Spring Data JPA
-- MySQL Connector
+- PostgreSQL JDBC Driver
 - Lombok
 - Validation
 
@@ -61,22 +61,16 @@ git clone https://github.com/aidil2105/UMTCEMS.git
 cd UMTCEMS
 ```
 
-### Step 2: Create Database
+### Step 2: Database Setup
 
-Open **phpMyAdmin** (http://localhost/phpmyadmin):
+You do *not* need phpMyAdmin for this project.
 
-1. Click the **SQL** tab at the top
-2. Paste this SQL command into the text box:
-```sql
-CREATE DATABASE umtcems;
-```
-3. Click **Go** or press Enter
-
-If you see a message like "Database umtcems already exists" — that's fine, it means it was already created. JPA will automatically create the database tables when you run the backend.
+Since the backend uses PostgreSQL on Supabase, there is no local MySQL database to create. If you need to run manual SQL, use the **Supabase SQL Editor** in the dashboard.
 
 ### Step 3: Supabase Handles the Database
-- No local PostgreSQL needed — Supabase hosts the database for the whole team
+- No local PostgreSQL install needed — Supabase hosts the database for the whole team
 - Follow the setup in `backend/SUPABASE_SETUP.md`
+- If the schema or seed data already exists, you can skip the manual SQL step
 
 ### Step 4: Configure Backend
 
