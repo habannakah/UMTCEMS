@@ -5,83 +5,73 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UMT Club Event Management System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+    <!-- Refined Typography: Inter for Body, Plus Jakarta Sans for Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            },
             colors: {
               umt: {
-                navy: '#002147',
-                light: '#0056b3',
-                accent: '#f4a261'
+                navy: '#0B1C38',
+                light: '#2D58A6',
+                accent: '#E68A35',
+              },
+              surface: {
+                50: '#F5F7FA',
+                100: '#EAEEF4',
+                200: '#D5DFEB',
+                300: '#B4C4D8',
+                400: '#8DA6C1',
+                500: '#6E8AAA',
+                600: '#546F90',
+                700: '#435A76',
+                800: '#384A61',
+                900: '#2A3648',
               }
+            },
+            boxShadow: {
+              'soft': '0 2px 8px -2px rgba(11, 28, 56, 0.05), 0 1px 4px -1px rgba(11, 28, 56, 0.03)',
+              'elevated': '0 8px 24px -4px rgba(11, 28, 56, 0.08), 0 4px 10px -2px rgba(11, 28, 56, 0.04)',
+              'floating': '0 20px 40px -8px rgba(11, 28, 56, 0.12), 0 10px 20px -4px rgba(11, 28, 56, 0.06)',
+            },
+            transitionTimingFunction: {
+              'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
             }
           }
         }
       }
     </script>
+    <script>
+      document.documentElement.classList.remove('dark');
+      document.documentElement.style.colorScheme = 'light';
+    </script>
     <style>
+      html {
+        background-color: #F5F7FA;
+        color-scheme: light;
+      }
       body {
-        font-family: 'Architects Daughter', cursive !important;
-        background-color: #ffffff !important;
-        background-image: 
-          linear-gradient(#e5e5e5 1px, transparent 1px), 
-          linear-gradient(90deg, #e5e5e5 1px, transparent 1px) !important;
-        background-size: 20px 20px !important;
-        color: #333333 !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: transparent;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
-      
-      /* Sketchy borders for all containers and interactive elements */
-      button, a, input, select, textarea, .bg-white, .bg-slate-50, .bg-blue-50, .bg-green-50, .bg-amber-50, .bg-red-50, .bg-indigo-50, .bg-umt-navy, .bg-indigo-100, .bg-amber-100, .bg-red-100, .bg-green-100, .bg-blue-100, .bg-slate-100, aside, header, .rounded-xl, .rounded-lg, .rounded-full, .rounded-md, .border, table, th, td {
-        border: 2px solid #333333 !important;
-        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-        background-color: #ffffff !important;
-        color: #333333 !important;
-        box-shadow: none !important;
-        text-decoration: none !important;
+      h1, h2, h3, h4, h5, h6, .font-display {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        letter-spacing: -0.02em;
       }
-
-      /* Hover states for interactive */
-      button:hover, a:hover {
-        background-color: #f5f5f5 !important;
-        transform: scale(1.02);
-        transition: all 0.2s ease;
-      }
-
-      /* Remove borders from layout wrappers to avoid double borders */
-      #root > div, body.bg-slate-50 {
-        border: none !important;
-        background: transparent !important;
-      }
-
-      /* Force text colors */
-      h1, h2, h3, h4, h5, h6, p, span, div, label {
-        color: #333333 !important;
-      }
-
-      /* Icons */
-      svg {
-        color: #333333 !important;
-        stroke-width: 1.5 !important;
-      }
-      
-      /* Hide background colors */
-      * {
-        box-shadow: none !important;
-      }
-      
-      /* Placeholder text */
-      ::placeholder {
-        color: #999999 !important;
-      }
-
-      /* Crossed out image placeholders if any */
-      img {
-        border: 2px solid #333 !important;
-        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-        filter: grayscale(100%) contrast(120%);
+      /* Custom selection color */
+      ::selection {
+        background-color: rgba(45, 88, 166, 0.2);
+        color: #0B1C38;
       }
     </style>
     <script>
@@ -102,7 +92,6 @@
         }
       })();
     </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-slate-50 text-slate-900 antialiased">
     <div id="root"></div>

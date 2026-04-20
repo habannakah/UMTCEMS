@@ -32,6 +32,28 @@ export interface Comment {
   tag?: string; // Optional tagging/referencing
 }
 
+export interface ProposalDocument {
+  name: string;
+  url: string;
+}
+
+export interface ProposalDraft {
+  title: string;
+  clubName: string;
+  submitterName: string;
+  dateSubmitted: string;
+  eventDate: string;
+  venue: string;
+  objective: string;
+  participants: string;
+  description: string;
+  budget?: string;
+  committee?: string;
+  logistics?: string;
+  outcomes?: string;
+  documents?: ProposalDocument[];
+}
+
 export interface Proposal {
   id: string;
   title: string;
@@ -48,7 +70,7 @@ export interface Proposal {
   logistics?: string;
   outcomes?: string;
   status: ProposalStatus;
-  documents: { name: string; url: string }[];
+  documents?: ProposalDocument[];
   comments: Comment[];
   history: { status: ProposalStatus; timestamp: string; actor: string }[];
   postEventReport?: {
@@ -57,3 +79,5 @@ export interface Proposal {
     submittedDate: string;
   };
 }
+
+export type EventProposal = Proposal;

@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "post_event_reports")
@@ -20,8 +25,9 @@ public class PostEventReport {
     @Column(name = "report_file")
     private String reportFile;
 
-    @Column(length = 2000)
-    private String photos; // JSON array string
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private List<String> photos = new ArrayList<>();
 
     @Column(name = "submission_date")
     private String submittedDate;

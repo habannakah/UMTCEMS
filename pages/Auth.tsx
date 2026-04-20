@@ -77,124 +77,147 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-100 blur-[120px] opacity-60 pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-amber-100 blur-[120px] opacity-60 pointer-events-none"></div>
+
+      <div className="max-w-md w-full bg-white/80 backdrop-blur-md rounded-2xl shadow-xl shadow-slate-200/50 border border-white p-8 sm:p-10 relative z-10">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-umt-navy text-white font-bold text-xl mb-4">U</div>
-          <h2 className="text-2xl font-bold text-slate-800">{mode === 'login' ? 'Welcome Back' : 'Create Account'}</h2>
-          <p className="text-slate-500 mt-1">{mode === 'login' ? 'Sign in to access the system' : 'Join the system to manage events'}</p>
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-umt-navy text-white font-bold text-2xl mb-5 shadow-sm transform -rotate-3 hover:rotate-0 transition-transform duration-300">U</div>
+          <h2 className="text-3xl font-bold text-slate-800 tracking-tight">{mode === 'login' ? 'Welcome Back' : 'Create Account'}</h2>
+          <p className="text-slate-500 mt-2 font-medium">{mode === 'login' ? 'Sign in to manage your club events' : 'Join the system to manage events'}</p>
         </div>
 
         {error && (
-          <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4 border border-red-100 flex items-center justify-center">
-            {error}
+          <div className="bg-red-50 text-red-700 text-sm p-4 rounded-lg mb-6 border border-red-200 flex items-start space-x-2.5">
+            <svg className="w-5 h-5 flex-shrink-0 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span className="font-medium leading-tight">{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="bg-green-50 text-green-600 text-sm p-3 rounded-lg mb-4 border border-green-100 flex items-center justify-center">
-            {success}
+          <div className="bg-green-50 text-green-700 text-sm p-4 rounded-lg mb-6 border border-green-200 flex items-start space-x-2.5">
+            <svg className="w-5 h-5 flex-shrink-0 text-green-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+            <span className="font-medium leading-tight">{success}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {mode === 'register' && (
             <>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Full Name</label>
                 <input
                   type="text"
                   required
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light focus:border-umt-light outline-none transition"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Enter your full name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Matric ID / Staff ID</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Matric ID / Staff ID</label>
                 <input
                   type="text"
                   required
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light focus:border-umt-light outline-none transition"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
                   value={matricId}
                   onChange={(e) => setMatricId(e.target.value)}
+                  placeholder="e.g. S12345"
                 />
               </div>
             </>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
             <input
               type="email"
               required
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light focus:border-umt-light outline-none transition"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@umt.edu.my"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-sm font-semibold text-slate-700">Password</label>
+              {mode === 'login' && <a href="#" className="text-xs font-medium text-umt-light hover:underline">Forgot password?</a>}
+            </div>
             <input
               type="password"
               required
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light focus:border-umt-light outline-none transition"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Role</label>
-            <select
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light focus:border-umt-light outline-none transition bg-white"
-              value={selectedRole}
-              onChange={(e) => setSelectedRole(e.target.value as UserRole)}
-            >
-              <option value={UserRole.CLUB_REP}>Club Representative</option>
-              <option value={UserRole.ADVISOR}>Club Advisor</option>
-              <option value={UserRole.MPP_EXCO}>MPP Club EXCO</option>
-              <option value={UserRole.HEPA_STAFF}>HEPA Staff</option>
-            </select>
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Role</label>
+            <div className="relative">
+              <select
+                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all appearance-none cursor-pointer"
+                value={selectedRole}
+                onChange={(e) => setSelectedRole(e.target.value as UserRole)}
+              >
+                <option value={UserRole.CLUB_REP}>Club Representative</option>
+                <option value={UserRole.ADVISOR}>Club Advisor</option>
+                <option value={UserRole.MPP_EXCO}>MPP Club EXCO</option>
+                <option value={UserRole.HEPA_STAFF}>HEPA Staff</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </div>
           </div>
 
           {mode === 'register' && (selectedRole === UserRole.CLUB_REP || selectedRole === UserRole.ADVISOR) && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Select Club</label>
-              <select
-                required
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light focus:border-umt-light outline-none transition bg-white"
-                value={selectedClub}
-                onChange={(e) => setSelectedClub(e.target.value)}
-              >
-                <option value="" disabled>Select a club...</option>
-                <option value="Computer Science Society">Computer Science Society</option>
-                <option value="Robotics Club">Robotics Club</option>
-                <option value="Debate Club">Debate Club</option>
-                <option value="Photography Society">Photography Society</option>
-              </select>
+              <label className="block text-sm font-semibold text-slate-700 mb-1.5">Select Club</label>
+              <div className="relative">
+                <select
+                  required
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all appearance-none cursor-pointer"
+                  value={selectedClub}
+                  onChange={(e) => setSelectedClub(e.target.value)}
+                >
+                  <option value="" disabled>Select a club...</option>
+                  <option value="Computer Science Society">Computer Science Society</option>
+                  <option value="Robotics Club">Robotics Club</option>
+                  <option value="Debate Club">Debate Club</option>
+                  <option value="Photography Society">Photography Society</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+              </div>
             </div>
           )}
 
           <button
             type="submit"
-            className="w-full bg-umt-navy text-white py-2.5 rounded-lg font-semibold hover:bg-blue-900 transition shadow-md mt-6"
+            className="w-full bg-umt-navy text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-all shadow-md hover:shadow-lg mt-8"
           >
-            {mode === 'login' ? 'Sign In' : 'Register'}
+            {mode === 'login' ? 'Sign In' : 'Create Account'}
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-slate-600">
+        <div className="mt-8 text-center text-sm text-slate-500 font-medium">
           {mode === 'login' ? (
             <>
               Don't have an account?{' '}
-              <button onClick={() => navigate('/register')} className="text-umt-light font-semibold hover:underline">Register</button>
+              <button onClick={() => navigate('/register')} className="text-umt-navy font-bold hover:underline transition-all">Register here</button>
             </>
           ) : (
             <>
               Already have an account?{' '}
-              <button onClick={() => navigate('/login')} className="text-umt-light font-semibold hover:underline">Sign In</button>
+              <button onClick={() => navigate('/login')} className="text-umt-navy font-bold hover:underline transition-all">Sign In</button>
             </>
           )}
         </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
-import { Upload, AlertCircle, ArrowLeft } from 'lucide-react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { ProposalStatus, UserRole } from '../types';
 
 const EditProposal: React.FC = () => {
@@ -222,18 +222,9 @@ const EditProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2 border-t border-slate-100 pt-6">
-              <h3 className="font-medium text-slate-800 mb-4">Update Documents (Optional)</h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition cursor-pointer">
-                  <Upload className="text-slate-400 mb-2" size={24} />
-                  <span className="text-sm font-medium text-slate-600">Upload New Risk Assessment</span>
-                  <input type="file" className="hidden" />
-                </div>
-                <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition cursor-pointer">
-                  <Upload className="text-slate-400 mb-2" size={24} />
-                  <span className="text-sm font-medium text-slate-600">Upload Additional Documents</span>
-                  <input type="file" className="hidden" />
-                </div>
+              <h3 className="font-medium text-slate-800 mb-2">Supporting Files</h3>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                Supporting file storage is part of the shared schema, but the actual resubmission upload flow still needs to be completed in the assigned feature module.
               </div>
             </div>
           </div>

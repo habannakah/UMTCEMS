@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
-import { Upload, CheckCircle, FileText, LayoutDashboard } from 'lucide-react';
+import { CheckCircle, FileText, LayoutDashboard } from 'lucide-react';
 
 const SubmitProposal: React.FC = () => {
   const { user } = useAuth();
@@ -32,17 +32,11 @@ const SubmitProposal: React.FC = () => {
     e.preventDefault();
     if (!user) return;
 
-    // Simulate Documents (Proposal PDF is removed as per requirements)
-    const documents = [
-      { name: 'Risk_Assessment.pdf', url: '#' },
-    ];
-
     addProposal({
       ...formData,
       clubName: user.clubName || 'Unknown Club',
       submitterName: user.name,
       dateSubmitted: new Date().toISOString().split('T')[0],
-      documents,
     });
 
     setIsSubmitted(true);
@@ -233,18 +227,9 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2 border-t border-slate-100 pt-6">
-              <h3 className="font-medium text-slate-800 mb-4">Required Documents</h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition cursor-pointer">
-                  <Upload className="text-slate-400 mb-2" size={24} />
-                  <span className="text-sm font-medium text-slate-600">Upload Risk Assessment</span>
-                  <input type="file" className="hidden" />
-                </div>
-                <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition cursor-pointer">
-                  <Upload className="text-slate-400 mb-2" size={24} />
-                  <span className="text-sm font-medium text-slate-600">Upload Additional Documents (Optional)</span>
-                  <input type="file" className="hidden" />
-                </div>
+              <h3 className="font-medium text-slate-800 mb-2">Supporting Files</h3>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                Optional supporting documents belong in the shared schema now, but the actual upload flow is still waiting on the assigned module to be finished.
               </div>
             </div>
           </div>

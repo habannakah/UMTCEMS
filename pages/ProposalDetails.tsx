@@ -255,19 +255,31 @@ const ProposalDetails: React.FC = () => {
             <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
                 <h3 className="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Documents</h3>
                 <div className="space-y-3">
-                    {proposal.documents.map((doc, idx) => (
-                        <div key={idx} className="flex items-center justify-between p-3 border border-slate-200 rounded-lg hover:bg-slate-50 transition">
-                            <div className="flex items-center space-x-3">
-                                <div className="bg-red-100 p-2 rounded text-red-600">
-                                    <FileText size={20} />
+                    {proposal.documents?.length ? (
+                        proposal.documents.map((doc, idx) => (
+                            <div key={idx} className="flex items-center justify-between p-3 border border-slate-200 rounded-lg hover:bg-slate-50 transition">
+                                <div className="flex items-center space-x-3">
+                                    <div className="bg-red-100 p-2 rounded text-red-600">
+                                        <FileText size={20} />
+                                    </div>
+                                    <span className="font-medium text-slate-700">{doc.name}</span>
                                 </div>
-                                <span className="font-medium text-slate-700">{doc.name}</span>
+                                <a
+                                    href={doc.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-slate-400 hover:text-umt-light"
+                                    aria-label={`Open ${doc.name}`}
+                                >
+                                    <Download size={20} />
+                                </a>
                             </div>
-                            <button className="text-slate-400 hover:text-umt-light">
-                                <Download size={20} />
-                            </button>
+                        ))
+                    ) : (
+                        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+                            No supporting documents have been attached to this proposal yet.
                         </div>
-                    ))}
+                    )}
                     
                     {/* Post-Event Report Display */}
                     {proposal.postEventReport && (

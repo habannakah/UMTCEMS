@@ -71,6 +71,9 @@ public class Proposal {
     @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL, orphanRemoval = true)
     private PostEventReport postEventReport;
 
+    @OneToMany(mappedBy = "proposal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProposalDocument> documents = new ArrayList<>();
+
     @Column(length = 4000)
     private String history; // JSON string of status history
 
@@ -81,5 +84,11 @@ public class Proposal {
     public void addComment(Comment comment) {
         comments.add(comment);
         comment.setProposal(this);
+    }
+
+    // Helper method to add supporting files
+    public void addDocument(ProposalDocument document) {
+        documents.add(document);
+        document.setProposal(this);
     }
 }
