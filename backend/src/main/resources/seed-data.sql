@@ -2,24 +2,31 @@
 -- UMTCEMS Seed Data (PostgreSQL / Supabase)
 -- Run this ONCE after the database tables are created
 -- Import via: Supabase Dashboard → SQL Editor → paste and Run
+-- Shared setup only: this intentionally avoids building anyone's
+-- assigned feature/demo flow for them.
 -- ============================================================
 
--- Reference data
-INSERT INTO user_roles (name) VALUES
-  ('ADMIN'),
-  ('HOD'),
-  ('STUDENT'),
-  ('ADVISOR')
-ON CONFLICT DO NOTHING;
+INSERT INTO roles (role_id, role_name, description) VALUES
+  (1, 'CLUB_REP', 'Club Representative'),
+  (2, 'ADVISOR', 'Club Advisor'),
+  (3, 'MPP_EXCO', 'MPP Club EXCO'),
+  (4, 'HEPA_STAFF', 'HEPA Staff')
+ON CONFLICT (role_id) DO UPDATE
+SET role_name = EXCLUDED.role_name,
+    description = EXCLUDED.description;
 
--- Users
-INSERT INTO users (name, email, password, role, club_name) VALUES
-  ('Admin User', 'admin@umt.edu.my', 'admin123', 'ADMIN', NULL),
-  ('Dr. Ahmad Razak', 'ahmad@umt.edu.my', 'hod123', 'HOD', NULL),
-  ('Aidil Syazwan', 'aidil@umt.edu.my', 'student123', 'STUDENT', 'Aidy Events'),
-  ('Alyssa Tan', 'alyssa@umt.edu.my', 'student123', 'STUDENT', 'Tech Club'),
-  ('Haban Ali', 'haban@umt.edu.my', 'student123', 'STUDENT', 'Coding Society')
-ON CONFLICT DO NOTHING;
+INSERT INTO users (role_id, full_name, email, password_hash, club_name) VALUES
+  (4, 'HEPA Staff Demo', 'hepa@umt.edu.my', 'hepa123', NULL),
+  (2, 'Dr. Advisor Demo', 'advisor@umt.edu.my', 'advisor123', 'Tech Club'),
+  (3, 'MPP Exco Demo', 'mpp@umt.edu.my', 'mpp123', NULL),
+  (1, 'Club Rep Demo', 'clubrep@umt.edu.my', 'clubrep123', 'Tech Club')
+ON CONFLICT (email) DO NOTHING;
 
--- Categories (add your own if needed — Category entity not yet created in the app)
--- INSERT INTO categories (name) VALUES ('Workshop'), ('Seminar'), ('Competition');
+INSERT INTO clubs (club_name, description, club_rep_user_id)
+SELECT
+  'Tech Club',
+  'Sample club for shared setup',
+  u.user_id
+FROM users u
+WHERE u.email = 'clubrep@umt.edu.my'
+ON CONFLICT (club_name) DO NOTHING;

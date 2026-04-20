@@ -14,24 +14,36 @@ public class PostEventReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "report_id")
     private Long id;
 
+    @Column(name = "report_file")
     private String reportFile;
 
+    @Column(length = 2000)
     private String photos; // JSON array string
 
+    @Column(name = "submission_date")
     private String submittedDate;
 
     // Additional fields
+    @Column(name = "attendance_count")
     private Integer actualAttendance;
 
+    @Column(name = "event_summary", length = 2000)
     private String outcomesSummary;
 
+    @Column(name = "total_expenses")
     private String budgetSpent;
 
+    @Column(name = "problems_faced", length = 2000)
     private String problemsFaced;
 
+    @Column(length = 2000)
     private String improvements;
+
+    @Column(name = "submitted_by")
+    private Long submittedBy;
 
     @OneToOne
     @JoinColumn(name = "proposal_id")

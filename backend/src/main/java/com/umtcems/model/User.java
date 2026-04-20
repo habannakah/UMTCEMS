@@ -14,20 +14,33 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "role_id", nullable = false)
+    private Long roleId;
+
+    @Column(name = "full_name", nullable = false)
     private String name;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private UserRole role;
+    @Column(name = "contact_no")
+    private String contactNo;
 
-    private String clubName; // Only for Club Reps and Advisors
+    @Column(name = "club_name")
+    private String clubName;
+
+    @Transient
+    public UserRole getRole() {
+        return UserRole.fromRoleId(roleId);
+    }
+
+    public void setRole(UserRole role) {
+        this.roleId = role != null ? role.getRoleId() : null;
+    }
 }
