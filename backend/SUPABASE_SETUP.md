@@ -6,30 +6,23 @@ I (Aidil) set up the database. Here's how to connect.
 
 ## Connection Info
 
-```
-postgresql://postgres:Umtcems2105_.@db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres
-```
-
-> ⚠️ Password ends with a `.` — copy it exactly.
+Ask Aidil for the current Supabase database URL and password. Do not paste the real password into Git.
 
 ---
 
-## Your application.properties
+## Your Environment Variables
 
-1. Copy `backend/src/main/resources/application.properties.template` → `application.properties`
-2. Replace the values with these:
+`backend/src/main/resources/application.properties` reads the database connection from environment variables.
 
-```properties
-spring.datasource.url=jdbc:postgresql://db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres
-spring.datasource.username=postgres
-spring.datasource.password=Umtcems2105_.
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=update
-server.port=8080
+PowerShell example:
+
+```powershell
+$env:SUPABASE_DB_URL="jdbc:postgresql://YOUR_HOST:5432/postgres"
+$env:SUPABASE_DB_USERNAME="postgres"
+$env:SUPABASE_DB_PASSWORD="YOUR_PASSWORD_HERE"
 ```
 
-3. Save. It's gitignored — safe to keep local.
+Set these in the same terminal before running the backend.
 
 ---
 
@@ -37,7 +30,7 @@ server.port=8080
 
 ```bash
 cd UMTCEMS/backend
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 First run is slow (Maven downloads everything). Wait for `Started UMTCEMSApplication`.
@@ -59,7 +52,8 @@ I'll do this myself. But if you need to:
 | Problem | Fix |
 |---------|-----|
 | `Connection refused` | Log into supabase.com/dashboard to wake the project up |
-| `Access denied` | Password wrong — make sure it's `Umtcems2105_.` with the dot |
+| `Access denied` | Check that `SUPABASE_DB_PASSWORD` matches the password from Supabase |
+| `Could not resolve placeholder 'SUPABASE_DB_URL'` | Set `SUPABASE_DB_URL` and `SUPABASE_DB_PASSWORD` in the terminal before running |
 | Tables don't exist | Normal on first run. JPA creates them automatically |
 | Maven seems stuck | First run takes 2-5 mins. Don't close it |
 

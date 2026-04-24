@@ -36,23 +36,24 @@ git pull origin main
 
 No local database needed — Supabase hosts PostgreSQL for the whole team.
 
-1. Copy `application.properties.template` to `application.properties`
-2. Fill in the Supabase connection string (already set up by your teammate)
+1. Get the Supabase database URL and password from your teammate
+2. Set them as environment variables before starting the backend
 3. See `SUPABASE_SETUP.md` for full details
 
 JPA will create the tables automatically when you run the app.
 
 ### 1.3: Configure Database
-Edit `backend/src/main/resources/application.properties`:
-Edit `backend/src/main/resources/application.properties` (copy from `application.properties.template`):
+`backend/src/main/resources/application.properties` reads database settings from environment variables.
 
-```properties
-spring.datasource.url=jdbc:postgresql://db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres
-spring.datasource.username=postgres
-spring.datasource.password=Umtcems2105_.
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+PowerShell example:
+
+```powershell
+$env:SUPABASE_DB_URL="jdbc:postgresql://YOUR_HOST:5432/postgres"
+$env:SUPABASE_DB_USERNAME="postgres"
+$env:SUPABASE_DB_PASSWORD="YOUR_PASSWORD_HERE"
 ```
+
+Do not commit real Supabase passwords.
 
 ---
 
@@ -357,9 +358,18 @@ curl http://localhost:8080/api/proposals
 |-------|-----|
 | `Communications link failure` | Check Supabase is active at supabase.com/dashboard. The project may have spun down from inactivity — log in to wake it up |
 | `Access denied for user 'postgres'` | Verify your `spring.datasource.password=` matches the Supabase password |
+| `Could not resolve placeholder 'SUPABASE_DB_URL'` | Set `SUPABASE_DB_URL` and `SUPABASE_DB_PASSWORD` before running the backend |
 | `Table 'users' doesn't exist` | Start the app — JPA creates tables automatically (`ddl-auto=update`) |
 | `CORS error` in browser | Make sure CorsConfig.java is loaded |
 | `404 Not Found` | Check your URL path matches the @RequestMapping |
+
+---
+
+## BACKEND MAINTENANCE NOTES
+
+- The Maven wrapper is committed under `.mvn/wrapper`, so teammates can run `./mvnw` without installing Maven separately.
+- `Comment` and `PostEventReport` hide their back-reference to `Proposal` in JSON responses. This prevents recursive API output when returning proposals, comments, and reports.
+- Controller TODO methods are still intentionally assigned work. The recent backend maintenance fixes do not complete any teammate's assignment endpoints.
 
 ---
 

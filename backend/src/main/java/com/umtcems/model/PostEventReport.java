@@ -1,5 +1,6 @@
 package com.umtcems.umtcems.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,6 +52,7 @@ public class PostEventReport {
     @Column(name = "submitted_by")
     private Long submittedBy;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "proposal_id")
     private Proposal proposal;

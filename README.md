@@ -78,23 +78,22 @@ Since the backend uses PostgreSQL on Supabase, there is no local MySQL database 
 
 **Short version:**
 
-1. One person shares the Supabase connection string with the team
-2. Everyone copies `backend/src/main/resources/application.properties.template` → `application.properties`
-3. Fill in the Supabase connection details
+1. One person shares the Supabase connection details with the team
+2. Set the database values as environment variables on your machine
+3. Keep `backend/src/main/resources/application.properties` as the shared template-driven config
 
-```properties
-# Supabase PostgreSQL connection
-spring.datasource.url=jdbc:postgresql://db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres
-spring.datasource.username=postgres
-spring.datasource.password=Umtcems2105_.
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+PowerShell example:
+
+```powershell
+$env:SUPABASE_DB_URL="jdbc:postgresql://YOUR_HOST:5432/postgres"
+$env:SUPABASE_DB_USERNAME="postgres"
+$env:SUPABASE_DB_PASSWORD="YOUR_PASSWORD_HERE"
 ```
 
 4. Start the backend — JPA auto-creates all tables (`ddl-auto=update`)
 5. One person runs `backend/src/main/resources/seed-data.sql` once in the Supabase SQL Editor
 
-> ⚠️ `application.properties` is gitignored — credentials will never be committed.
+> Do not commit real Supabase passwords. `application.properties` reads from environment variables.
 
 ### Step 5: Run Backend
 
@@ -260,11 +259,19 @@ git push origin feature/yourname-backend
 | Maven/Gradle download seems stuck on first run | Wait 2–5 minutes. First run downloads ~100MB of dependencies. DO NOT close the window. |
 | `Communications link failure` | Check Supabase project is active in the dashboard. If it restarted, verify your `application.properties` host/port are correct |
 | `Access denied for user 'postgres'` | Check your `spring.datasource.password=` matches the Supabase password exactly |
+| `Could not resolve placeholder 'SUPABASE_DB_URL'` | Set `SUPABASE_DB_URL` and `SUPABASE_DB_PASSWORD` before running the backend |
 | `CORS error` in browser | Make sure backend is running on port 8080 |
 | `Port 5173 is already in use` | Vite will automatically use 5174 instead — check the terminal output |
 | Java errors in VS Code | Install **"Extension Pack for Java"** extension in VS Code |
 | `Table 'users' doesn't exist` | Start the app — JPA creates tables automatically on first run (`ddl-auto=update`) |
 | Supabase connection refused | Log in to supabase.com/dashboard to wake up the project. Free tier spins down after inactivity |
+
+---
+
+## Backend Maintenance Notes
+
+- Maven wrapper files are committed under `backend/.mvn/wrapper`, so teammates can run `./mvnw` without installing Maven separately.
+- Proposal comments and post-event reports hide their back-reference to proposals in JSON responses to avoid recursive API output.
 
 ---
 

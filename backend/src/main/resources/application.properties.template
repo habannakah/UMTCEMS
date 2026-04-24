@@ -8,9 +8,9 @@ server.port=8080
 
 # Supabase PostgreSQL Connection
 # Find these in: Supabase Dashboard → your project → Settings → Connection Info
-spring.datasource.url=jdbc:postgresql://YOUR_HOST:5432/postgres
-spring.datasource.username=postgres
-spring.datasource.password=YOUR_PASSWORD_HERE
+spring.datasource.url=${SUPABASE_DB_URL:jdbc:postgresql://YOUR_HOST:5432/postgres}
+spring.datasource.username=${SUPABASE_DB_USERNAME:postgres}
+spring.datasource.password=${SUPABASE_DB_PASSWORD:YOUR_PASSWORD_HERE}
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 # JPA / Hibernate

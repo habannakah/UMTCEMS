@@ -1,5 +1,6 @@
 package com.umtcems.umtcems.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Comment {
 
     private String tag;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "proposal_id")
     private Proposal proposal;
