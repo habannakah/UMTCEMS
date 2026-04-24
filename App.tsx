@@ -13,6 +13,8 @@ import Profile from './pages/Profile';
 import EditProposal from './pages/EditProposal';
 import ApprovedEvents from './pages/ApprovedEvents';
 import AnalyticsMockup from './pages/AnalyticsMockup';
+import Proposals from './pages/Proposals';
+import ReviewQueue from './pages/ReviewQueue';
 
 // Protected Route Wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -35,10 +37,10 @@ const AppRoutes = () => {
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/analytics" element={<ProtectedRoute><AnalyticsMockup /></ProtectedRoute>} />
             <Route path="/submit-proposal" element={<ProtectedRoute><SubmitProposal /></ProtectedRoute>} />
-            <Route path="/proposals" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} /> {/* Reusing dashboard list logic for simplified demo */}
+            <Route path="/proposals" element={<ProtectedRoute><Proposals /></ProtectedRoute>} />
             <Route path="/proposals/:id" element={<ProtectedRoute><ProposalDetails /></ProtectedRoute>} />
             <Route path="/proposals/:id/edit" element={<ProtectedRoute><EditProposal /></ProtectedRoute>} />
-            <Route path="/reviews" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} /> {/* Reusing dashboard logic */}
+            <Route path="/reviews" element={<ProtectedRoute><ReviewQueue /></ProtectedRoute>} />
             <Route path="/reports" element={<ProtectedRoute><PostEventReport /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/events" element={<ProtectedRoute><ApprovedEvents /></ProtectedRoute>} />

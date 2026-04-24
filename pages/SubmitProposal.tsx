@@ -87,6 +87,16 @@ const SubmitProposal: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="col-span-2">
+              <div className="flex items-center gap-3">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-umt-navy text-white text-sm font-extrabold">1</span>
+                <div>
+                  <h3 className="font-display font-semibold text-lg text-surface-900">Event Information</h3>
+                  <p className="text-sm font-medium text-surface-500">Name the event, confirm ownership, and set the date.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-2">
               <label className="block text-sm font-bold text-surface-700 mb-1.5">Event Title</label>
               <input
                 type="text"
@@ -122,6 +132,16 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2">
+              <div className="flex items-center gap-3 pt-2">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-umt-navy text-white text-sm font-extrabold">2</span>
+                <div>
+                  <h3 className="font-display font-semibold text-lg text-surface-900">Venue & Audience</h3>
+                  <p className="text-sm font-medium text-surface-500">Clarify where the event happens and who it serves.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-2">
               <label className="block text-sm font-bold text-surface-700 mb-1.5">Venue</label>
               <input
                 type="text"
@@ -149,6 +169,16 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2">
+              <div className="flex items-center gap-3 pt-2">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-umt-navy text-white text-sm font-extrabold">3</span>
+                <div>
+                  <h3 className="font-display font-semibold text-lg text-surface-900">Proposal Details</h3>
+                  <p className="text-sm font-medium text-surface-500">Explain the purpose, activity flow, and expected impact.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-2">
               <label className="block text-sm font-bold text-surface-700 mb-1.5">Objective</label>
               <textarea
                 name="objective"
@@ -172,6 +202,16 @@ const SubmitProposal: React.FC = () => {
                 value={formData.description}
                 onChange={handleChange}
               />
+            </div>
+
+            <div className="col-span-2">
+              <div className="flex items-center gap-3 pt-2">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-umt-navy text-white text-sm font-extrabold">4</span>
+                <div>
+                  <h3 className="font-display font-semibold text-lg text-surface-900">Budget & Logistics</h3>
+                  <p className="text-sm font-medium text-surface-500">Document resources, organizers, equipment, and support files.</p>
+                </div>
+              </div>
             </div>
 
             <div className="col-span-2">
