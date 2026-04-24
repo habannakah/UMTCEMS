@@ -45,7 +45,7 @@ const ClubRepDashboard = ({ user, proposals }: { user: any, proposals: EventProp
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <Link to="/submit-proposal" className="bg-white p-8 flex flex-col items-center justify-center text-center border border-surface-200 rounded-xl shadow-soft hover:shadow-floating transition-all duration-500 ease-out-expo group transform hover:-translate-y-1 relative overflow-hidden">
-           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-surface-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out-expo"></div>
+                  <div className="absolute inset-x-8 top-0 h-px bg-umt-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out-expo"></div>
            <div className="p-4 bg-surface-100 text-surface-600 rounded-2xl mb-4 group-hover:bg-umt-accent/10 group-hover:text-umt-accent transition-colors duration-300 relative z-10">
              <Plus size={36} strokeWidth={1.5} />
            </div>
@@ -53,7 +53,7 @@ const ClubRepDashboard = ({ user, proposals }: { user: any, proposals: EventProp
            <span className="text-[15px] mt-2 text-surface-500 relative z-10 leading-relaxed">Draft a new event for {user.clubName}</span>
         </Link>
         <Link to="/reports" className="bg-white p-8 flex flex-col items-center justify-center text-center border border-surface-200 rounded-xl shadow-soft hover:shadow-floating transition-all duration-500 ease-out-expo group transform hover:-translate-y-1 relative overflow-hidden">
-           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-surface-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out-expo"></div>
+                  <div className="absolute inset-x-8 top-0 h-px bg-umt-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out-expo"></div>
            <div className="p-4 bg-surface-100 text-surface-600 rounded-2xl mb-4 group-hover:bg-umt-accent/10 group-hover:text-umt-accent transition-colors duration-300 relative z-10">
              <FileText size={36} strokeWidth={1.5} />
            </div>

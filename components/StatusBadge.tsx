@@ -9,18 +9,18 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const getStyle = (s: ProposalStatus) => {
     switch (s) {
       case ProposalStatus.APPROVED:
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'bg-emerald-50 text-emerald-800 border-emerald-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
       case ProposalStatus.COMPLETED:
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-sky-50 text-sky-800 border-sky-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
       case ProposalStatus.REJECTED:
-        return 'bg-red-100 text-red-800 border-red-200';
+        return 'bg-red-50 text-red-800 border-red-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
       case ProposalStatus.NEEDS_IMPROVEMENT:
-        return 'bg-amber-100 text-amber-800 border-amber-200';
+        return 'bg-amber-50 text-amber-800 border-amber-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
       case ProposalStatus.PENDING_ADVISOR:
       case ProposalStatus.PENDING_MPP:
-        return 'bg-slate-100 text-slate-800 border-slate-200';
+        return 'bg-umt-paper text-umt-navy border-umt-navy/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-surface-100 text-surface-800 border-surface-200';
     }
   };
 
@@ -35,7 +35,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   };
 
   return (
-    <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStyle(status)}`}>
+    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-[0.12em] border ${getStyle(status)}`}>
       {getLabel(status)}
     </span>
   );
