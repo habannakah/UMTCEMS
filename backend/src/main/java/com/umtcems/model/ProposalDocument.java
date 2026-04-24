@@ -41,4 +41,8 @@ public class ProposalDocument {
     @ManyToOne
     @JoinColumn(name = "proposal_id", nullable = false)
     private Proposal proposal;
+
+    public void setProposal(Proposal proposal) {
+        this.proposal = proposal;
+    }
 }

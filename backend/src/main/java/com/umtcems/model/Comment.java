@@ -37,4 +37,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "proposal_id")
     private Proposal proposal;
+
+    public void setProposal(Proposal proposal) {
+        this.proposal = proposal;
+    }
 }
