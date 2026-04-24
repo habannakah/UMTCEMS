@@ -141,8 +141,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       to={to}
       className={`flex items-center space-x-3 px-4 py-2.5 rounded-lg transition-all duration-200 group ${
         isActive(to)
-          ? 'bg-umt-paper text-umt-navy font-bold relative shadow-sm ring-1 ring-umt-navy/5 after:absolute after:left-0 after:top-2 after:bottom-2 after:w-1 after:bg-umt-accent after:rounded-r-full'
-          : 'text-surface-600 hover:bg-umt-paper/70 hover:text-umt-ink font-semibold hover:shadow-sm'
+          ? 'bg-umt-paper text-umt-navy font-bold relative shadow-sm ring-1 ring-umt-navy/5 after:absolute after:left-0 after:top-2 after:bottom-2 after:w-1 after:bg-umt-accent after:rounded-r-full before:absolute before:inset-y-2 before:right-3 before:w-1 before:rounded-full before:bg-umt-accent/25'
+          : 'text-surface-600 hover:bg-umt-paper/70 hover:text-umt-ink font-semibold hover:shadow-sm hover:translate-x-0.5'
       }`}
       onClick={() => setIsMobileMenuOpen(false)}
     >
@@ -152,10 +152,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   );
 
   return (
-    <div className="min-h-screen flex bg-umt-paper paper-grid transition-colors duration-300">
+    <div className="min-h-screen flex bg-umt-paper paper-grid transition-colors duration-300 relative overflow-x-hidden">
+      <div className="pointer-events-none fixed inset-x-0 top-0 h-1 bg-gradient-to-r from-umt-accent via-umt-light to-umt-reed z-50"></div>
       {/* Sidebar for Desktop */}
-      <aside className="hidden md:flex flex-col w-64 bg-white/95 backdrop-blur-md border-r border-umt-navy/10 fixed h-full z-10 transition-colors duration-300 shadow-[12px_0_32px_-30px_rgba(7,27,47,0.75)]">
-        <div className="p-6 border-b border-umt-navy/10 flex items-center space-x-2 bg-white/90 transition-colors duration-300">
+      <aside className="hidden md:flex flex-col w-64 bg-white/95 backdrop-blur-xl border-r border-umt-navy/10 fixed h-full z-10 transition-colors duration-300 shadow-[14px_0_38px_-32px_rgba(7,27,47,0.78)]">
+        <div className="p-6 border-b border-umt-navy/10 flex items-center space-x-2 bg-white/90 transition-colors duration-300 relative overflow-hidden">
+           <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-umt-accent/35 to-transparent"></div>
            <div className="umt-mark w-9 h-9 bg-white rounded-md flex items-center justify-center overflow-hidden ring-1 ring-umt-navy/10">
              <img src="/umt.png" alt="UMT logo" className="h-7 w-7 object-contain" />
            </div>
@@ -196,7 +198,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="p-4 border-t border-umt-navy/10 bg-umt-paper/75 transition-colors duration-300">
           <button
             onClick={handleLogout}
-            className="flex items-center space-x-3 px-4 py-2.5 w-full text-surface-600 hover:bg-red-50 hover:text-red-700 rounded-lg transition-all duration-200 group"
+            className="flex items-center space-x-3 px-4 py-2.5 w-full text-surface-600 hover:bg-red-50 hover:text-red-700 rounded-lg transition-all duration-200 group font-semibold"
           >
             <LogOut size={20} className="text-slate-400 group-hover:text-red-600 transition-colors" />
             <span className="font-medium">Logout</span>
@@ -206,7 +208,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Mobile Header & Content Wrapper */}
       <div className="flex-1 flex flex-col md:ml-64">
-        <header className="bg-white/90 backdrop-blur-md h-16 border-b border-umt-navy/10 flex items-center justify-between px-6 sticky top-0 z-20 shadow-[0_10px_30px_-28px_rgba(7,27,47,0.9)]">
+        <header className="bg-white/90 backdrop-blur-xl h-16 border-b border-umt-navy/10 flex items-center justify-between px-6 sticky top-0 z-20 shadow-[0_12px_34px_-30px_rgba(7,27,47,0.9)]">
           <div className="flex items-center md:hidden">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-surface-600 p-2 hover:bg-umt-paper rounded-lg transition-colors">
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -235,7 +237,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               </button>
 
               {isNotificationOpen && (
-                <div className="absolute right-0 mt-3 w-96 max-w-[calc(100vw-2rem)] bg-white border border-umt-navy/10 rounded-xl shadow-floating overflow-hidden z-50">
+                <div className="absolute right-0 mt-3 w-96 max-w-[calc(100vw-2rem)] bg-white border border-umt-navy/10 rounded-xl shadow-floating overflow-hidden z-50 animate-[fadeIn_0.22s_ease-out]">
                   <div className="px-5 py-4 border-b border-umt-navy/10 bg-umt-paper/70">
                     <div className="flex items-center justify-between">
                       <div>
@@ -344,7 +346,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 overflow-y-auto">
           {error && (
-            <div className="mb-6 flex items-start gap-3 border border-amber-200 bg-amber-50 px-4 py-3 text-amber-800">
+            <div className="mb-6 flex items-start gap-3 border border-amber-200 bg-amber-50 px-4 py-3 text-amber-800 rounded-xl shadow-soft">
               <AlertTriangle size={18} className="mt-0.5 flex-shrink-0" />
               <div>
                 <div className="font-semibold">Backend response issue</div>

@@ -78,8 +78,10 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
 
   return (
     <div className="min-h-screen bg-umt-paper paper-grid flex items-center justify-center px-4 relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-umt-accent via-umt-light to-umt-reed"></div>
 
-      <div className="max-w-md w-full bg-white rounded-lg shadow-floating border border-umt-navy/10 p-8 sm:p-10 relative z-10">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-floating border border-umt-navy/10 p-8 sm:p-10 relative z-10 overflow-hidden">
+        <div className="absolute inset-x-8 top-0 h-px bg-umt-accent/60"></div>
         <div className="text-center mb-8">
           <div className="umt-mark inline-flex items-center justify-center w-14 h-14 rounded-md bg-white mb-5 shadow-sm ring-1 ring-umt-navy/10 overflow-hidden transform -rotate-2 hover:rotate-0 transition-transform duration-300">
             <img src="/umt.png" alt="UMT logo" className="h-11 w-11 object-contain" />
@@ -110,7 +112,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
                 <input
                   type="text"
                   required
-                  className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-md focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
+                  className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Enter your full name"
@@ -121,7 +123,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
                 <input
                   type="text"
                   required
-                  className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-md focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
+                  className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
                   value={matricId}
                   onChange={(e) => setMatricId(e.target.value)}
                   placeholder="e.g. S12345"
@@ -135,7 +137,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
             <input
               type="email"
               required
-              className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-md focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
+              className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@umt.edu.my"
@@ -150,7 +152,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
             <input
               type="password"
               required
-            className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-md focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
+            className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
@@ -161,7 +163,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
             <label className="block text-sm font-bold text-surface-700 mb-1.5">Role</label>
             <div className="relative">
               <select
-                className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-md focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all appearance-none cursor-pointer"
+                className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all appearance-none cursor-pointer"
                 value={selectedRole}
                 onChange={(e) => setSelectedRole(e.target.value as UserRole)}
               >
@@ -182,7 +184,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
               <div className="relative">
                 <select
                   required
-                  className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-md focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all appearance-none cursor-pointer"
+                  className="w-full px-4 py-2.5 bg-umt-paper/50 border border-umt-navy/10 rounded-lg focus:bg-white focus:ring-2 focus:ring-umt-navy/20 focus:border-umt-navy outline-none transition-all appearance-none cursor-pointer"
                   value={selectedClub}
                   onChange={(e) => setSelectedClub(e.target.value)}
                 >
@@ -201,7 +203,7 @@ const Auth: React.FC<AuthProps> = ({ mode }) => {
 
           <button
             type="submit"
-            className="w-full bg-umt-navy text-white py-3 rounded-md font-extrabold hover:bg-umt-ink transition-all shadow-md hover:shadow-lg mt-8"
+            className="w-full bg-umt-navy text-white py-3 rounded-lg font-extrabold hover:bg-umt-ink transition-all shadow-elevated hover:shadow-floating hover:-translate-y-0.5 mt-8"
           >
             {mode === 'login' ? 'Sign In' : 'Create Account'}
           </button>

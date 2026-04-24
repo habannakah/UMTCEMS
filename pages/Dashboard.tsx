@@ -317,34 +317,34 @@ const HepaDashboard = ({ user, proposals, stats }: { user: any, proposals: Event
       </div>
 
       {/* Recent Activity Table */}
-      <div className="bg-white p-6 border border-slate-200 rounded-xl shadow-sm">
+      <div className="bg-white p-6 border border-surface-200 rounded-xl shadow-soft">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="font-semibold text-xl text-slate-800">Recent Proposals</h2>
-          <Link to="/proposals" className="text-sm font-medium text-umt-accent hover:text-amber-700 transition-colors">View All &rarr;</Link>
+          <h2 className="font-display font-semibold text-xl text-surface-900">Recent Proposals</h2>
+          <Link to="/proposals" className="text-sm font-bold text-umt-accent hover:text-amber-700 transition-colors">View All &rarr;</Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50/50">
-                <th className="p-4 border-b border-slate-200 font-semibold text-sm text-slate-600">Event Title</th>
-                <th className="p-4 border-b border-slate-200 font-semibold text-sm text-slate-600">Club</th>
-                <th className="p-4 border-b border-slate-200 font-semibold text-sm text-slate-600">Submitted</th>
-                <th className="p-4 border-b border-slate-200 font-semibold text-sm text-slate-600">Status</th>
-                <th className="p-4 border-b border-slate-200 font-semibold text-sm text-slate-600">Action</th>
+              <tr className="bg-surface-50/50">
+                <th className="p-4 border-b border-surface-200 font-extrabold text-xs uppercase tracking-[0.12em] text-surface-500">Event Title</th>
+                <th className="p-4 border-b border-surface-200 font-extrabold text-xs uppercase tracking-[0.12em] text-surface-500">Club</th>
+                <th className="p-4 border-b border-surface-200 font-extrabold text-xs uppercase tracking-[0.12em] text-surface-500">Submitted</th>
+                <th className="p-4 border-b border-surface-200 font-extrabold text-xs uppercase tracking-[0.12em] text-surface-500">Status</th>
+                <th className="p-4 border-b border-surface-200 font-extrabold text-xs uppercase tracking-[0.12em] text-surface-500">Action</th>
               </tr>
             </thead>
             <tbody>
               {recentProposals.length === 0 ? (
-                <tr><td colSpan={5} className="p-8 text-center text-slate-500 bg-slate-50/30">No proposals found.</td></tr>
+                <tr><td colSpan={5} className="p-8 text-center text-surface-500 bg-surface-50/30">No proposals found.</td></tr>
               ) : (
                 recentProposals.map((proposal) => (
-                  <tr key={proposal.id} className="hover:bg-slate-50/80 transition-colors border-b border-slate-100 last:border-0 group">
-                    <td className="p-4 font-medium text-slate-800">{proposal.title}</td>
-                    <td className="p-4 font-medium text-slate-600 bg-slate-50/30">{proposal.clubName}</td>
-                    <td className="p-4 text-slate-600">{proposal.dateSubmitted}</td>
+                  <tr key={proposal.id} className="hover:bg-surface-50/80 transition-colors border-b border-surface-100 last:border-0 group">
+                    <td className="p-4 font-semibold text-surface-900">{proposal.title}</td>
+                    <td className="p-4 font-medium text-surface-600 bg-surface-50/30">{proposal.clubName}</td>
+                    <td className="p-4 text-surface-600">{proposal.dateSubmitted}</td>
                     <td className="p-4"><StatusBadge status={proposal.status} /></td>
                     <td className="p-4">
-                      <button onClick={() => navigate(`/proposals/${proposal.id}`)} className="text-sm font-medium text-umt-navy hover:text-blue-800 transition-colors opacity-80 group-hover:opacity-100 flex items-center">View Details <ArrowRight size={14} className="ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" /></button>
+                      <button onClick={() => navigate(`/proposals/${proposal.id}`)} className="text-sm font-bold text-umt-navy hover:text-umt-light transition-colors opacity-80 group-hover:opacity-100 flex items-center">View Details <ArrowRight size={14} className="ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" /></button>
                     </td>
                   </tr>
                 ))
@@ -369,12 +369,12 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="mb-8 pb-6 border-b border-slate-200">
-        <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Dashboard</h1>
-        <p className="font-medium text-slate-500 mt-2 flex items-center">
+      <div className="mb-8 pb-6 border-b border-surface-200">
+        <h1 className="text-3xl font-display font-bold text-surface-900 tracking-tight">Dashboard</h1>
+        <p className="font-medium text-surface-500 mt-2 flex items-center">
           Welcome back, <span className="text-umt-navy ml-1 font-semibold">{user.name}</span>
-          <span className="mx-2 text-slate-300">•</span>
-          <span className="bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full text-xs uppercase tracking-wide">{user.role.replace('_', ' ')}</span>
+          <span className="mx-2 text-surface-300">•</span>
+          <span className="bg-umt-paper text-umt-navy px-2.5 py-0.5 rounded-full text-xs font-extrabold uppercase tracking-[0.12em] border border-umt-navy/10">{user.role.replace('_', ' ')}</span>
         </p>
       </div>
 

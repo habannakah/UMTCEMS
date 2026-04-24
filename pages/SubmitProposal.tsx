@@ -45,28 +45,28 @@ const SubmitProposal: React.FC = () => {
   if (isSubmitted) {
     return (
       <div className="max-w-xl mx-auto mt-12 px-4">
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 text-center transform transition-all animate-[fadeIn_0.5s_ease-out]">
-          <div className="w-20 h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="bg-white rounded-2xl shadow-floating border border-surface-200 p-8 text-center transform transition-all animate-[fadeIn_0.5s_ease-out]">
+          <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-100 shadow-sm">
             <CheckCircle size={40} strokeWidth={2.5} />
           </div>
           
-          <h2 className="text-3xl font-bold text-slate-800 mb-2">Submission Successful!</h2>
-          <p className="text-slate-500 mb-8 text-lg">
-            Your event proposal <span className="font-semibold text-slate-800">"{formData.title}"</span> has been submitted.
+          <h2 className="text-3xl font-display font-bold text-surface-900 mb-2">Submission Successful!</h2>
+          <p className="text-surface-500 mb-8 text-lg">
+            Your event proposal <span className="font-semibold text-surface-900">"{formData.title}"</span> has been submitted.
             <br />
-            Current Status: <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-slate-100 text-slate-800 mt-2 border border-slate-200">Pending Advisor</span>
+            Current Status: <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-bold bg-umt-paper text-umt-navy mt-2 border border-umt-navy/15">Pending Advisor</span>
           </p>
           
           <div className="space-y-3">
             <button 
               onClick={() => navigate('/proposals')}
-              className="w-full py-3.5 bg-umt-navy text-white rounded-xl font-bold hover:bg-blue-900 transition flex items-center justify-center shadow-md hover:shadow-lg"
+              className="w-full py-3.5 bg-umt-navy text-white rounded-xl font-bold hover:bg-blue-900 transition flex items-center justify-center shadow-elevated hover:shadow-floating hover:-translate-y-0.5"
             >
               <FileText size={20} className="mr-2" /> Track Proposal Status
             </button>
             <button 
               onClick={() => navigate('/dashboard')}
-              className="w-full py-3.5 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-slate-50 transition flex items-center justify-center"
+              className="w-full py-3.5 bg-white border border-surface-200 text-surface-700 rounded-xl font-bold hover:bg-surface-50 transition flex items-center justify-center shadow-sm hover:shadow-md"
             >
               <LayoutDashboard size={20} className="mr-2" /> Back to Dashboard
             </button>
@@ -78,21 +78,21 @@ const SubmitProposal: React.FC = () => {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-800">Submit Event Proposal</h1>
-        <p className="text-slate-500">Fill in the details to request approval for your club event.</p>
+      <div className="mb-6 pb-6 border-b border-surface-200">
+        <h1 className="text-3xl font-display font-bold text-surface-900">Submit Event Proposal</h1>
+        <p className="font-medium text-surface-500 mt-2">Fill in the details to request approval for your club event.</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-8">
+      <div className="bg-white rounded-xl shadow-soft border border-surface-200 p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Event Title</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Event Title</label>
               <input
                 type="text"
                 name="title"
                 required
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="e.g. Annual Tech Symposium"
                 value={formData.title}
                 onChange={handleChange}
@@ -100,48 +100,48 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Club Name</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Club Name</label>
               <input
                 type="text"
                 disabled
                 value={user?.clubName}
-                className="w-full px-4 py-2 border border-slate-200 bg-slate-50 rounded-lg text-slate-500"
+                className="w-full px-4 py-2.5 border border-surface-200 bg-surface-50 rounded-lg text-surface-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Event Date</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Event Date</label>
               <input
                 type="date"
                 name="eventDate"
                 required
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 value={formData.eventDate}
                 onChange={handleChange}
               />
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Venue</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Venue</label>
               <input
                 type="text"
                 name="venue"
                 required
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="e.g. Auditorium UMT"
                 value={formData.venue}
                 onChange={handleChange}
               />
-              <p className="text-xs text-slate-400 mt-1">Note: This does not book the venue automatically.</p>
+              <p className="text-xs text-surface-400 mt-1.5 font-medium">Note: This does not book the venue automatically.</p>
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Target Participants</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Target Participants</label>
               <input
                 type="text"
                 name="participants"
                 required
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="e.g. 200 Students from CS Faculty"
                 value={formData.participants}
                 onChange={handleChange}
@@ -149,12 +149,12 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Objective</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Objective</label>
               <textarea
                 name="objective"
                 required
                 rows={3}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="Why are you organizing this event?"
                 value={formData.objective}
                 onChange={handleChange}
@@ -162,12 +162,12 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Description / Tentative</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Description / Tentative</label>
               <textarea
                 name="description"
                 required
                 rows={5}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="Provide a brief schedule or description..."
                 value={formData.description}
                 onChange={handleChange}
@@ -175,12 +175,12 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Budget / Financial Requirements</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Budget / Financial Requirements</label>
               <textarea
                 name="budget"
                 required
                 rows={3}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="Provide a breakdown of the estimated budget..."
                 value={formData.budget}
                 onChange={handleChange}
@@ -188,12 +188,12 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Committee Members / Organizers</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Committee Members / Organizers</label>
               <textarea
                 name="committee"
                 required
                 rows={3}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="List the key committee members and their roles..."
                 value={formData.committee}
                 onChange={handleChange}
@@ -201,12 +201,12 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Equipment / Logistics Needed</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Equipment / Logistics Needed</label>
               <textarea
                 name="logistics"
                 required
                 rows={3}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="List any equipment, transportation, or logistics required..."
                 value={formData.logistics}
                 onChange={handleChange}
@@ -214,21 +214,21 @@ const SubmitProposal: React.FC = () => {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">Expected Outcomes</label>
+              <label className="block text-sm font-bold text-surface-700 mb-1.5">Expected Outcomes</label>
               <textarea
                 name="outcomes"
                 required
                 rows={3}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
+                className="w-full px-4 py-2.5 border border-surface-300 rounded-lg focus:ring-2 focus:ring-umt-light outline-none"
                 placeholder="What are the expected benefits or outcomes of this event?"
                 value={formData.outcomes}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="col-span-2 border-t border-slate-100 pt-6">
-              <h3 className="font-medium text-slate-800 mb-2">Supporting Files</h3>
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+            <div className="col-span-2 border-t border-surface-100 pt-6">
+              <h3 className="font-display font-semibold text-surface-900 mb-2">Supporting Files</h3>
+              <div className="rounded-xl border border-surface-200 bg-surface-50/70 p-4 text-sm font-medium text-surface-600">
                 Optional supporting documents belong in the shared schema now, but the actual upload flow is still waiting on the assigned module to be finished.
               </div>
             </div>
@@ -238,13 +238,13 @@ const SubmitProposal: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/dashboard')}
-              className="px-6 py-2.5 text-slate-600 font-medium mr-4 hover:bg-slate-100 rounded-lg transition"
+              className="px-6 py-2.5 text-surface-600 font-semibold mr-4 hover:bg-surface-100 rounded-lg transition"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-8 py-2.5 bg-umt-navy text-white font-medium rounded-lg hover:bg-blue-900 transition shadow-sm"
+              className="px-8 py-2.5 bg-umt-navy text-white font-semibold rounded-lg hover:bg-blue-900 transition shadow-elevated hover:-translate-y-0.5"
             >
               Submit Proposal
             </button>

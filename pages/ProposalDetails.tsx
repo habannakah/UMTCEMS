@@ -156,20 +156,20 @@ const ProposalDetails: React.FC = () => {
 
       {/* Success Notification */}
       {successMessage && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-xl flex items-center shadow-sm animate-[fadeIn_0.5s_ease-out]">
-          <CheckCircle size={24} className="mr-3 text-green-600" />
+        <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-6 py-4 rounded-xl flex items-center shadow-soft animate-[fadeIn_0.5s_ease-out]">
+          <CheckCircle size={24} className="mr-3 text-emerald-600" />
           <div className="font-medium text-lg">{successMessage}</div>
         </div>
       )}
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-surface-200">
         <div>
            <div className="flex items-center space-x-3 mb-2">
-               <h1 className="text-2xl font-bold text-slate-800">{proposal.title}</h1>
+               <h1 className="text-3xl font-display font-bold text-surface-900">{proposal.title}</h1>
                <StatusBadge status={proposal.status} />
            </div>
-           <div className="flex flex-wrap gap-4 text-sm text-slate-500">
+           <div className="flex flex-wrap gap-4 text-sm font-medium text-surface-500">
                <span className="flex items-center"><User size={16} className="mr-1"/> {proposal.submitterName} ({proposal.clubName})</span>
                <span className="flex items-center"><Calendar size={16} className="mr-1"/> Submitted: {proposal.dateSubmitted}</span>
            </div>
@@ -202,67 +202,67 @@ const ProposalDetails: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
          {/* Main Details */}
          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-                <h3 className="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Event Details</h3>
+            <div className="bg-white rounded-xl shadow-soft border border-surface-200 p-6">
+                <h3 className="text-lg font-display font-bold text-surface-900 mb-4 border-b border-surface-100 pb-2">Event Details</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                        <label className="text-xs font-semibold text-slate-400 uppercase">Event Date</label>
-                        <p className="font-medium text-slate-800 flex items-center mt-1"><Calendar size={18} className="mr-2 text-umt-light"/> {proposal.eventDate}</p>
+                        <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Event Date</label>
+                        <p className="font-semibold text-surface-900 flex items-center mt-1"><Calendar size={18} className="mr-2 text-umt-light"/> {proposal.eventDate}</p>
                     </div>
                     <div>
-                        <label className="text-xs font-semibold text-slate-400 uppercase">Venue</label>
-                        <p className="font-medium text-slate-800 flex items-center mt-1"><MapPin size={18} className="mr-2 text-umt-light"/> {proposal.venue}</p>
+                        <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Venue</label>
+                        <p className="font-semibold text-surface-900 flex items-center mt-1"><MapPin size={18} className="mr-2 text-umt-light"/> {proposal.venue}</p>
                     </div>
                     <div>
-                        <label className="text-xs font-semibold text-slate-400 uppercase">Participants</label>
-                        <p className="text-slate-700 mt-1">{proposal.participants}</p>
+                        <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Participants</label>
+                        <p className="text-surface-700 mt-1 font-medium">{proposal.participants}</p>
                     </div>
                      <div className="col-span-2">
-                        <label className="text-xs font-semibold text-slate-400 uppercase">Objective</label>
-                        <p className="text-slate-700 mt-1 bg-slate-50 p-3 rounded-lg border border-slate-100">{proposal.objective}</p>
+                        <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Objective</label>
+                        <p className="text-surface-700 mt-1 bg-surface-50 p-3 rounded-lg border border-surface-100 font-medium">{proposal.objective}</p>
                     </div>
                     <div className="col-span-2">
-                        <label className="text-xs font-semibold text-slate-400 uppercase">Description</label>
-                        <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.description}</p>
+                        <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Description</label>
+                        <p className="text-surface-700 mt-1 whitespace-pre-wrap font-medium leading-relaxed">{proposal.description}</p>
                     </div>
                     {proposal.budget && (
                         <div className="col-span-2">
-                            <label className="text-xs font-semibold text-slate-400 uppercase">Budget / Financial Requirements</label>
-                            <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.budget}</p>
+                            <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Budget / Financial Requirements</label>
+                            <p className="text-surface-700 mt-1 whitespace-pre-wrap font-medium leading-relaxed">{proposal.budget}</p>
                         </div>
                     )}
                     {proposal.committee && (
                         <div className="col-span-2">
-                            <label className="text-xs font-semibold text-slate-400 uppercase">Committee Members / Organizers</label>
-                            <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.committee}</p>
+                            <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Committee Members / Organizers</label>
+                            <p className="text-surface-700 mt-1 whitespace-pre-wrap font-medium leading-relaxed">{proposal.committee}</p>
                         </div>
                     )}
                     {proposal.logistics && (
                         <div className="col-span-2">
-                            <label className="text-xs font-semibold text-slate-400 uppercase">Equipment / Logistics Needed</label>
-                            <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.logistics}</p>
+                            <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Equipment / Logistics Needed</label>
+                            <p className="text-surface-700 mt-1 whitespace-pre-wrap font-medium leading-relaxed">{proposal.logistics}</p>
                         </div>
                     )}
                     {proposal.outcomes && (
                         <div className="col-span-2">
-                            <label className="text-xs font-semibold text-slate-400 uppercase">Expected Outcomes</label>
-                            <p className="text-slate-700 mt-1 whitespace-pre-wrap">{proposal.outcomes}</p>
+                            <label className="text-xs font-extrabold text-surface-400 uppercase tracking-[0.12em]">Expected Outcomes</label>
+                            <p className="text-surface-700 mt-1 whitespace-pre-wrap font-medium leading-relaxed">{proposal.outcomes}</p>
                         </div>
                     )}
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-                <h3 className="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Documents</h3>
+            <div className="bg-white rounded-xl shadow-soft border border-surface-200 p-6">
+                <h3 className="text-lg font-display font-bold text-surface-900 mb-4 border-b border-surface-100 pb-2">Documents</h3>
                 <div className="space-y-3">
                     {proposal.documents?.length ? (
                         proposal.documents.map((doc, idx) => (
-                            <div key={idx} className="flex items-center justify-between p-3 border border-slate-200 rounded-lg hover:bg-slate-50 transition">
+                            <div key={idx} className="flex items-center justify-between p-3 border border-surface-200 rounded-lg hover:bg-surface-50 transition">
                                 <div className="flex items-center space-x-3">
                                     <div className="bg-red-100 p-2 rounded text-red-600">
                                         <FileText size={20} />
                                     </div>
-                                    <span className="font-medium text-slate-700">{doc.name}</span>
+                                    <span className="font-semibold text-surface-700">{doc.name}</span>
                                 </div>
                                 <a
                                     href={doc.url}
@@ -276,7 +276,7 @@ const ProposalDetails: React.FC = () => {
                             </div>
                         ))
                     ) : (
-                        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+                        <div className="rounded-lg border border-surface-200 bg-surface-50 p-4 text-sm font-medium text-surface-500">
                             No supporting documents have been attached to this proposal yet.
                         </div>
                     )}
@@ -406,8 +406,8 @@ const ProposalDetails: React.FC = () => {
 
          {/* Sidebar - Timeline */}
          <div className="space-y-6">
-             <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-                <h3 className="text-lg font-bold text-slate-800 mb-4">Status Timeline</h3>
+             <div className="bg-white rounded-xl shadow-soft border border-surface-200 p-6">
+                <h3 className="text-lg font-display font-bold text-surface-900 mb-4">Status Timeline</h3>
                 <div className="relative border-l-2 border-slate-200 ml-3 space-y-6 pl-6 pb-2">
                     {proposal.history.map((h, idx) => {
                         let label = h.status.replace('_', ' ');

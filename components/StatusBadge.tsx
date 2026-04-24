@@ -9,18 +9,18 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const getStyle = (s: ProposalStatus) => {
     switch (s) {
       case ProposalStatus.APPROVED:
-        return 'bg-emerald-50 text-emerald-800 border-emerald-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
+        return 'bg-emerald-50 text-emerald-800 border-emerald-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] before:bg-emerald-500';
       case ProposalStatus.COMPLETED:
-        return 'bg-sky-50 text-sky-800 border-sky-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
+        return 'bg-sky-50 text-sky-800 border-sky-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] before:bg-sky-500';
       case ProposalStatus.REJECTED:
-        return 'bg-red-50 text-red-800 border-red-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
+        return 'bg-red-50 text-red-800 border-red-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] before:bg-red-500';
       case ProposalStatus.NEEDS_IMPROVEMENT:
-        return 'bg-amber-50 text-amber-800 border-amber-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
+        return 'bg-amber-50 text-amber-800 border-amber-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] before:bg-amber-500';
       case ProposalStatus.PENDING_ADVISOR:
       case ProposalStatus.PENDING_MPP:
-        return 'bg-umt-paper text-umt-navy border-umt-navy/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]';
+        return 'bg-umt-paper text-umt-navy border-umt-navy/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] before:bg-umt-accent';
       default:
-        return 'bg-surface-100 text-surface-800 border-surface-200';
+        return 'bg-surface-100 text-surface-800 border-surface-200 before:bg-surface-400';
     }
   };
 
@@ -35,7 +35,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   };
 
   return (
-    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-[0.12em] border ${getStyle(status)}`}>
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-[0.12em] border before:h-1.5 before:w-1.5 before:rounded-full ${getStyle(status)}`}>
       {getLabel(status)}
     </span>
   );
