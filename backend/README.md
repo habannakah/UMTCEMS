@@ -36,7 +36,7 @@ git pull origin main
 
 No local database needed — Supabase hosts PostgreSQL for the whole team.
 
-1. Get the Supabase database URL and password from your teammate
+1. Use the shared Supabase connection details below
 2. Set them as environment variables before starting the backend
 3. See `SUPABASE_SETUP.md` for full details
 
@@ -48,9 +48,9 @@ JPA will create the tables automatically when you run the app.
 PowerShell example:
 
 ```powershell
-$env:SUPABASE_DB_URL="jdbc:postgresql://YOUR_HOST:5432/postgres"
+$env:SUPABASE_DB_URL="jdbc:postgresql://db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres"
 $env:SUPABASE_DB_USERNAME="postgres"
-$env:SUPABASE_DB_PASSWORD="YOUR_PASSWORD_HERE"
+$env:SUPABASE_DB_PASSWORD="Umtcems2105_."
 ```
 
 Do not commit real Supabase passwords.

@@ -78,16 +78,16 @@ Since the backend uses PostgreSQL on Supabase, there is no local MySQL database 
 
 **Short version:**
 
-1. One person shares the Supabase connection details with the team
+1. Use the shared Supabase connection details below
 2. Set the database values as environment variables on your machine
 3. Keep `backend/src/main/resources/application.properties` as the shared template-driven config
 
 PowerShell example:
 
 ```powershell
-$env:SUPABASE_DB_URL="jdbc:postgresql://YOUR_HOST:5432/postgres"
+$env:SUPABASE_DB_URL="jdbc:postgresql://db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres"
 $env:SUPABASE_DB_USERNAME="postgres"
-$env:SUPABASE_DB_PASSWORD="YOUR_PASSWORD_HERE"
+$env:SUPABASE_DB_PASSWORD="Umtcems2105_."
 ```
 
 4. Start the backend — JPA auto-creates all tables (`ddl-auto=update`)

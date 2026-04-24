@@ -6,7 +6,11 @@ I (Aidil) set up the database. Here's how to connect.
 
 ## Connection Info
 
-Ask Aidil for the current Supabase database URL and password. Do not paste the real password into Git.
+Use this shared Supabase database connection for local backend development:
+
+```text
+postgresql://postgres:Umtcems2105_.@db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres
+```
 
 ---
 
@@ -17,9 +21,9 @@ Ask Aidil for the current Supabase database URL and password. Do not paste the r
 PowerShell example:
 
 ```powershell
-$env:SUPABASE_DB_URL="jdbc:postgresql://YOUR_HOST:5432/postgres"
+$env:SUPABASE_DB_URL="jdbc:postgresql://db.kdxjgjfmsncsrvfskhre.supabase.co:5432/postgres"
 $env:SUPABASE_DB_USERNAME="postgres"
-$env:SUPABASE_DB_PASSWORD="YOUR_PASSWORD_HERE"
+$env:SUPABASE_DB_PASSWORD="Umtcems2105_."
 ```
 
 Set these in the same terminal before running the backend.
@@ -52,7 +56,7 @@ I'll do this myself. But if you need to:
 | Problem | Fix |
 |---------|-----|
 | `Connection refused` | Log into supabase.com/dashboard to wake the project up |
-| `Access denied` | Check that `SUPABASE_DB_PASSWORD` matches the password from Supabase |
+| `Access denied` | Check that `SUPABASE_DB_PASSWORD` is copied exactly, including the final dot |
 | `Could not resolve placeholder 'SUPABASE_DB_URL'` | Set `SUPABASE_DB_URL` and `SUPABASE_DB_PASSWORD` in the terminal before running |
 | Tables don't exist | Normal on first run. JPA creates them automatically |
 | Maven seems stuck | First run takes 2-5 mins. Don't close it |
